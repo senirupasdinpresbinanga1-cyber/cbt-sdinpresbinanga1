@@ -1,5 +1,5 @@
-// ISI DENGAN URL APPS SCRIPT SPREADSHEET HASIL DEPLOYMENT ANDA
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyYsHqFNchYFzvqBiHENfFM6-iiV131vKwnIcvxymMM34jXPC9tvNGCfV66mYUnxIKH/exec";
+// ISI DENGAN URL APPS SCRIPT WEB APP ANDA (Contoh: https://script.google.com/macros/s/.../exec)
+const GOOGLE_SCRIPT_URL = "LINK-GOOGLE FORM APPS SCRIPT";
 
 // Database Siswa Kelas 6A dan 6B
 const validStudents = [
@@ -78,7 +78,7 @@ const allQuestions = [
   { id: 13, mapel: "PAI", type: "pg", text: "Rina melihat temannya membuang sampah sembarangan. Ia mengingatkannya karena kebersihan adalah ....", options: ["A. Sebagian dari iman", "B. Syarat naik kelas", "C. Tugas petugas kebersihan saja", "D. Aturan yang boleh dilanggar"], answer: 0 },
   { id: 14, mapel: "PAI", type: "pg", text: "Husnuzan artinya ....", options: ["A. Prasangka buruk", "B. Iri hati", "C. Berprasangka baik", "D. Marah"], answer: 2 },
   { id: 15, mapel: "PAI", type: "pg", text: "Dua orang teman bertengkar. Andi lalu meminta maaf lebih dulu dan memaafkan temannya. Akhlak yang ditunjukkan Andi adalah ....", options: ["A. Tamak", "B. Hasad", "C. Takabur", "D. Pemaaf"], answer: 3 },
-
+  
   // PAI Uraian (16-20)
   { id: 16, mapel: "PAI", type: "essay", text: "Jelaskan arti beriman kepada Qada dan Qadar, lalu berikan satu contoh penerapannya di sekolah!" },
   { id: 17, mapel: "PAI", type: "essay", text: "Dimas sudah berlatih keras, tetapi gagal menjuarai lomba. Ia kecewa dan ingin berhenti mengikuti lomba. Berikan nasihat kepada Dimas berdasarkan sikap sabar dan tawakal!" },
@@ -408,7 +408,6 @@ function finishExam() {
   let pgScore = 0;
   let essayTextSummary = "";
   
-  // Data Akumulasi Hasil Jawaban untuk Grafik
   const pgLabels = [];
   const pgCorrectData = [];
   const pgWrongData = [];
@@ -422,7 +421,7 @@ function finishExam() {
       const isCorrect = (userAnswers[idx] === q.answer);
       
       if (isCorrect) {
-        pgScore += 2; // Maksimal 240 poin PG
+        pgScore += 2;
         cumulativeCorrect++;
       } else {
         cumulativeWrong++;
@@ -440,10 +439,8 @@ function finishExam() {
   document.getElementById("res-kelas").innerText = currentUser.kelas;
   document.getElementById("res-score").innerText = pgScore;
 
-  // Visualisasikan Hasil dengan Grafik Area / Line
   renderResultChart(pgLabels, pgCorrectData, pgWrongData);
 
-  // Kirim data ke Google Sheets
   const payload = {
     action: "save",
     nama: currentUser.nama,
@@ -453,14 +450,15 @@ function finishExam() {
     jawabanUraian: essayTextSummary
   };
 
+  // DIPERBAIKI: Mengirim payload via POST dengan benar ke Google Apps Script Web App
   fetch(GOOGLE_SCRIPT_URL, {
     method: "POST",
     mode: "no-cors",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
     body: JSON.stringify(payload)
   })
   .then(() => {
-    document.getElementById("res-status").innerText = "Berhasil Terkirim ke Spreadsheet Admin!";
+    document.getElementById("res-status").innerText = "Berhasil Terkirim ke Sistem Passing Grade!";
     document.getElementById("res-status").style.color = "#52c41a";
   })
   .catch((err) => {
@@ -469,36 +467,32 @@ function finishExam() {
   });
 }
 
-// Rendering Grafik Area / Line (Biru = Benar, Merah = Salah/Kosong)
+// Rendering Stacked Bar Chart (Merah di Bawah, Biru Bertumpuk di Atas)
 function renderResultChart(labels, correctData, wrongData) {
   const ctx = document.getElementById('resultChart').getContext('2d');
-  
-  new Chart(ctx, {
-    type: 'line',
+
+  if (window.myResultChart) {
+    window.myResultChart.destroy();
+  }
+
+  window.myResultChart = new Chart(ctx, {
+    type: 'bar',
     data: {
       labels: labels,
       datasets: [
         {
-          label: 'Jawaban Benar (Biru)',
-          data: correctData,
-          borderColor: '#1677ff',
-          backgroundColor: 'rgba(22, 119, 255, 0.45)',
-          fill: 'origin',
-          tension: 0.1,
-          pointRadius: 2,
-          pointBackgroundColor: '#1677ff',
-          borderWidth: 2
-        },
-        {
           label: 'Jawaban Salah / Kosong (Merah)',
           data: wrongData,
-          borderColor: '#ff4d4f',
-          backgroundColor: 'rgba(255, 77, 79, 0.45)',
-          fill: 'origin',
-          tension: 0.1,
-          pointRadius: 2,
-          pointBackgroundColor: '#ff4d4f',
-          borderWidth: 2
+          backgroundColor: '#b83b32',
+          barPercentage: 1.0,
+          categoryPercentage: 1.0
+        },
+        {
+          label: 'Jawaban Benar (Biru)',
+          data: correctData,
+          backgroundColor: '#4285f4',
+          barPercentage: 1.0,
+          categoryPercentage: 1.0
         }
       ]
     },
@@ -509,25 +503,25 @@ function renderResultChart(labels, correctData, wrongData) {
         legend: {
           position: 'top',
           labels: { font: { weight: 'bold' } }
-        },
-        tooltip: {
-          mode: 'index',
-          intersect: false
         }
       },
       scales: {
+        x: {
+          stacked: true,
+          grid: { display: false },
+          ticks: {
+            font: { size: 8 },
+            maxRotation: 0,
+            autoSkip: true,
+            maxTicksLimit: 20
+          }
+        },
         y: {
+          stacked: true,
           beginAtZero: true,
-          stacked: false, // Menghindari tumpukan data/penjumlahan antar seri
           title: {
             display: true,
             text: 'Jumlah Soal'
-          }
-        },
-        x: {
-          ticks: {
-            font: { size: 9 },
-            maxRotation: 0
           }
         }
       }
