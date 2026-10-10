@@ -60,7 +60,7 @@ const validStudents = [
   { nisn: "0141239341", nama: "ZAM ZAMMY KHAIRIL MALIKI ABHAL", kelas: "6A" }
 ];
 
-// Penggabungan 160 Soal (PAI, Pancasila, B.Indo, MTK, IPAS, PJOK, Seni Budaya, B.Inggris)
+// Penggabungan 160 Soal
 const allQuestions = [
   // PAI PG (1-15)
   { id: 1, mapel: "PAI", type: "pg", text: "Rukun iman yang keenam adalah iman kepada ....", options: ["A. Rasul", "B. Hari akhir", "C. Qada dan Qadar", "D. Malaikat"], answer: 2 },
@@ -78,7 +78,7 @@ const allQuestions = [
   { id: 13, mapel: "PAI", type: "pg", text: "Rina melihat temannya membuang sampah sembarangan. Ia mengingatkannya karena kebersihan adalah ....", options: ["A. Sebagian dari iman", "B. Syarat naik kelas", "C. Tugas petugas kebersihan saja", "D. Aturan yang boleh dilanggar"], answer: 0 },
   { id: 14, mapel: "PAI", type: "pg", text: "Husnuzan artinya ....", options: ["A. Prasangka buruk", "B. Iri hati", "C. Berprasangka baik", "D. Marah"], answer: 2 },
   { id: 15, mapel: "PAI", type: "pg", text: "Dua orang teman bertengkar. Andi lalu meminta maaf lebih dulu dan memaafkan temannya. Akhlak yang ditunjukkan Andi adalah ....", options: ["A. Tamak", "B. Hasad", "C. Takabur", "D. Pemaaf"], answer: 3 },
-  
+
   // PAI Uraian (16-20)
   { id: 16, mapel: "PAI", type: "essay", text: "Jelaskan arti beriman kepada Qada dan Qadar, lalu berikan satu contoh penerapannya di sekolah!" },
   { id: 17, mapel: "PAI", type: "essay", text: "Dimas sudah berlatih keras, tetapi gagal menjuarai lomba. Ia kecewa dan ingin berhenti mengikuti lomba. Berikan nasihat kepada Dimas berdasarkan sikap sabar dan tawakal!" },
@@ -408,23 +408,28 @@ function finishExam() {
   let pgScore = 0;
   let essayTextSummary = "";
   
-  // Data Hasil Jawaban untuk Grafik Line
+  // Data Akumulasi Hasil Jawaban untuk Grafik
   const pgLabels = [];
   const pgCorrectData = [];
   const pgWrongData = [];
+
+  let cumulativeCorrect = 0;
+  let cumulativeWrong = 0;
 
   allQuestions.forEach((q, idx) => {
     if (q.type === "pg") {
       pgLabels.push(`S${idx + 1}`);
       const isCorrect = (userAnswers[idx] === q.answer);
+      
       if (isCorrect) {
         pgScore += 2; // Maksimal 240 poin PG
-        pgCorrectData.push(1);
-        pgWrongData.push(0);
+        cumulativeCorrect++;
       } else {
-        pgCorrectData.push(0);
-        pgWrongData.push(1);
+        cumulativeWrong++;
       }
+
+      pgCorrectData.push(cumulativeCorrect);
+      pgWrongData.push(cumulativeWrong);
     } else {
       essayTextSummary += `[Soal ${idx + 1} - ${q.mapel}]: ${userAnswers[idx] || "Tidak Diisi"} | `;
     }
@@ -435,7 +440,7 @@ function finishExam() {
   document.getElementById("res-kelas").innerText = currentUser.kelas;
   document.getElementById("res-score").innerText = pgScore;
 
-  // Visualisasikan Hasil dengan Grafik Line Smooth (Gelombang)
+  // Visualisasikan Hasil dengan Grafik Area / Line
   renderResultChart(pgLabels, pgCorrectData, pgWrongData);
 
   // Kirim data ke Google Sheets
@@ -464,7 +469,7 @@ function finishExam() {
   });
 }
 
-// Rendering Grafik Line Gelombang (Smooth Curved)
+// Rendering Grafik Area / Line (Biru = Benar, Merah = Salah/Kosong)
 function renderResultChart(labels, correctData, wrongData) {
   const ctx = document.getElementById('resultChart').getContext('2d');
   
@@ -474,24 +479,24 @@ function renderResultChart(labels, correctData, wrongData) {
       labels: labels,
       datasets: [
         {
-          label: 'Jawaban Benar',
+          label: 'Jawaban Benar (Biru)',
           data: correctData,
-          borderColor: '#52c41a',
-          backgroundColor: 'rgba(82, 196, 26, 0.15)',
-          tension: 0.4, // Membuat Gelombang Mulus (Smooth Spline)
-          fill: true,
-          pointRadius: 3,
-          pointBackgroundColor: '#52c41a',
+          borderColor: '#1677ff',
+          backgroundColor: 'rgba(22, 119, 255, 0.45)',
+          fill: 'origin',
+          tension: 0.1,
+          pointRadius: 2,
+          pointBackgroundColor: '#1677ff',
           borderWidth: 2
         },
         {
-          label: 'Jawaban Salah / Kosong',
+          label: 'Jawaban Salah / Kosong (Merah)',
           data: wrongData,
           borderColor: '#ff4d4f',
-          backgroundColor: 'rgba(255, 77, 79, 0.15)',
-          tension: 0.4, // Membuat Gelombang Mulus (Smooth Spline)
-          fill: true,
-          pointRadius: 3,
+          backgroundColor: 'rgba(255, 77, 79, 0.45)',
+          fill: 'origin',
+          tension: 0.1,
+          pointRadius: 2,
           pointBackgroundColor: '#ff4d4f',
           borderWidth: 2
         }
@@ -506,24 +511,17 @@ function renderResultChart(labels, correctData, wrongData) {
           labels: { font: { weight: 'bold' } }
         },
         tooltip: {
-          callbacks: {
-            label: function(context) {
-              return context.dataset.label + ': ' + (context.raw === 1 ? 'Ya' : 'Tidak');
-            }
-          }
+          mode: 'index',
+          intersect: false
         }
       },
       scales: {
         y: {
-          min: -0.1,
-          max: 1.1,
-          ticks: {
-            stepSize: 1,
-            callback: function(value) {
-              if (value === 1) return 'YA';
-              if (value === 0) return 'TIDAK';
-              return '';
-            }
+          beginAtZero: true,
+          stacked: false, // Menghindari tumpukan data/penjumlahan antar seri
+          title: {
+            display: true,
+            text: 'Jumlah Soal'
           }
         },
         x: {
