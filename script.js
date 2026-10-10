@@ -1,4 +1,4 @@
-const GOOGLE_SCRIPT_URL = "URL_APPS_SCRIPT_ANDA_DISINI";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyn6ZoU_GwegfVeml1QijXa1xlpf4Pqx4M5pl-zKALjID2wh19iMed-d1TZIx65pMsw/exec";
 
 const validStudents = [
   { nisn: "3140466270", nama: "AIRIN RAHMI ANDINI", kelas: "6B" },
