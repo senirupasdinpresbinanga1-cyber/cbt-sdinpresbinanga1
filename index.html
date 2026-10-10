@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SD INPRES BINANGA 1 - UJIAN SEKOLAH CBT 2026</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-  <!-- Chart.js Library untuk Grafik Line Bergelombang -->
+  <!-- Chart.js untuk Grafik Garis Bergelombang -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     * { box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; }
@@ -51,7 +51,7 @@
     .option-item input { margin-right: 12px; transform: scale(1.2); }
     textarea { width: 100%; height: 130px; padding: 12px; border: 1px solid #ccc; border-radius: 8px; resize: vertical; font-size: 14px; }
 
-    .number-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; max-height: 380px; overflow-y: auto; padding-right: 5px; }
+    .number-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; max-height: 400px; overflow-y: auto; padding-right: 5px; }
     .num-btn { padding: 8px; text-align: center; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer; font-weight: 700; font-size: 12px; }
     .num-btn.active { background: #1677ff; color: white; border-color: #1677ff; }
     .num-btn.answered { background: #52c41a; color: white; border-color: #52c41a; }
@@ -59,9 +59,6 @@
     .btn-action { padding: 10px 20px; border-radius: 6px; border: none; font-weight: 700; cursor: pointer; font-size: 14px; }
     .btn-secondary { background: #6c757d; color: white; }
     .btn-success { background: #52c41a; color: white; width: 100%; }
-
-    .chart-box { margin-top: 25px; padding: 20px; background: #fafafa; border: 1px solid #e8e8e8; border-radius: 10px; }
-    .chart-container { position: relative; height: 320px; width: 100%; margin-top: 15px; }
 
     footer { text-align: center; padding: 20px; font-size: 12px; color: #888; }
     .hidden { display: none !important; }
@@ -72,7 +69,8 @@
   <div class="header-bg">
     <div class="header-content">
       <div class="logo-tutwuri">
-        <img src="file:///C:/Users/Hype%20GLK/Downloads/Lambang%20Pendidikan%20Tut%20Wuri%20Handayani.png">
+        <!-- Logo menggunakan path lokal dari komputer Anda -->
+        <img src="file:///C:/Users/Hype%20GLK/Downloads/Lambang%20Pendidikan%20Tut%20Wuri%20Handayani.png" alt="Tut Wuri Handayani">
       </div>
       <div class="school-title">
         <h1>SD INPRES BINANGA 1</h1>
@@ -160,36 +158,35 @@
       </div>
     </div>
 
-    <!-- 4. HALAMAN HASIL -->
+    <!-- 4. HALAMAN HASIL & GRAFIK -->
     <div id="result-screen" class="card hidden">
       <h3 style="color: #52c41a;">Ujian Selesai!</h3>
-      <p style="margin-top: 8px; font-size: 14px; color: #666;">Nilai dan jawaban Anda telah dikirimkan ke server Google Drive sekolah.</p>
+      <p style="margin-top: 8px; font-size: 14px; color: #666;">Nilai dan rincian jawaban Anda telah dikirimkan ke server sekolah.</p>
       
       <div style="margin: 20px 0; padding: 15px; background: #f6ffed; border: 1px solid #b7eb8f; border-radius: 8px; line-height: 1.8; font-size: 14px;">
         <p><strong>Nama:</strong> <span id="res-nama"></span></p>
         <p><strong>NISN:</strong> <span id="res-nisn"></span></p>
         <p><strong>Kelas:</strong> <span id="res-kelas"></span></p>
         <p><strong>Skor Pilihan Ganda:</strong> <span id="res-score" style="font-weight:bold; font-size:18px; color:#389e0d;"></span> / 240</p>
-        <p><strong>Status Pengiriman:</strong> <span id="res-status" style="color:#1677ff; font-weight:bold;">Mengirim data ke Spreadsheet...</span></p>
+        <p><strong>Status Pengiriman:</strong> <span id="res-status" style="color:#1677ff; font-weight:bold;">Mengirim data ke Google Drive...</span></p>
       </div>
 
-      <!-- GRAFIK LINE BERGELOMBANG SIKLUS BENAR/SALAH -->
-      <div class="chart-box">
-        <h4 style="text-align: center; color: #333;">Grafik Analisis Jawaban Pilihan Ganda</h4>
-        <p style="text-align: center; font-size: 12px; color: #777;">Grafik bergelombang menunjukkan status Benar (Hijau) dan Salah/Kosong (Merah) per nomor soal.</p>
-        <div class="chart-container">
-          <canvas id="resultChart"></canvas>
+      <div style="margin-top: 25px;">
+        <h4 style="margin-bottom: 10px; font-size: 15px; text-align: center; color: #333;">Grafik Analisis Jawaban Pilihan Ganda (Gelombang Benar/Salah)</h4>
+        <div style="position: relative; height:250px; width:100%;">
+          <canvas id="resultWaveChart"></canvas>
         </div>
+        <p style="font-size: 11px; text-align: center; color: #777; margin-top: 8px;">* Garis Hijau: Jawaban Benar | Garis Merah: Jawaban Salah / Kosong</p>
       </div>
 
-      <button onclick="location.reload()" class="btn-login" style="margin-top: 25px; width: auto; padding: 10px 25px;">Selesai</button>
+      <button onclick="location.reload()" class="btn-login" style="margin-top: 25px; width: auto; padding: 10px 25px; display: block; margin-left: auto; margin-right: auto;">Keluar / Selesai</button>
     </div>
 
   </div>
 
   <footer>
     <p>© Copyright 2026, CBT SD Inpres Binanga 1 Mamuju</p>
-    <p style="font-size: 10px; margin-top: 3px; opacity: 0.7;">Aplikasi Ujian: v1.0.0</p>
+    <p style="font-size: 10px; margin-top: 3px; opacity: 0.7;">Aplikasi Ujian: v1.1.0</p>
   </footer>
 
   <script src="script.js"></script>
