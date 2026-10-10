@@ -1,5 +1,5 @@
 // ISI DENGAN URL APPS SCRIPT WEB APP ANDA (Contoh: https://script.google.com/macros/s/.../exec)
-const GOOGLE_SCRIPT_URL = "LINK-GOOGLE FORM APPS SCRIPT";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxmRWbGCXAhMd7lMq6KwqIZbnsqBVZ1DA0VKGdN6dj-r8kelHWOpF3D0m8-6MalsCEb/exec";
 
 // Database Siswa Kelas 6A dan 6B
 const validStudents = [
