@@ -1,0 +1,91 @@
+let cacheHasil = [];
+let sedangMemuat = false;
+
+function setStatus(teks, error) {
+  const el = document.getElementById('status');
+  if (el) {
+    el.textContent = teks || '';
+    el.style.color = error ? '#ff4d4f' : '#52c41a';
+  }
+}
+
+function muatTabel() {
+  if (sedangMemuat) return;
+  sedangMemuat = true;
+  google.script.run
+    .withSuccessHandler(data => {
+      cacheHasil = data || [];
+      renderTabel(cacheHasil);
+      const updateEl = document.getElementById('lastUpdate');
+      if (updateEl) {
+        updateEl.textContent = 'Terakhir diperbarui: ' + new Date().toLocaleTimeString('id-ID');
+      }
+      sedangMemuat = false;
+    })
+    .withFailureHandler(err => {
+      setStatus((err && err.message) || 'Data gagal dimuat.', true);
+      sedangMemuat = false;
+    })
+    .getDaftarNilai();
+}
+
+function renderTabel(data) {
+  const tbody = document.getElementById('tbody');
+  const searchInput = document.getElementById('search');
+  const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+  
+  const filtered = (data || []).filter(s =>
+    [s.nisn, s.nama, s.kelas].some(v => String(v || '').toLowerCase().includes(query))
+  );
+  
+  tbody.innerHTML = '';
+  if (!filtered.length) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#777;">Belum ada data ujian siswa yang masuk.</td></tr>';
+    return;
+  }
+  
+  filtered.forEach((s, idx) => {
+    const tr = document.createElement('tr');
+    
+    tr.innerHTML = `
+      <td>${idx + 1}</td>
+      <td>${s.nisn}</td>
+      <td><b>${s.nama}</b></td>
+      <td>${s.kelas}</td>
+      <td><b>${s.skorPG}</b></td>
+      <td><span class="badge ${s.warna || 'merah'}">${s.predikat || 'Kurang'}</span></td>
+      <td style="font-size:12px; color:#666;">${s.diperbarui ? new Date(s.diperbarui).toLocaleTimeString('id-ID') : '-'}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function cetakTabel() {
+  window.print();
+}
+
+function resetNilai() {
+  const yakin = confirm('PERINGATAN: Seluruh data passing grade siswa akan dihapus permanen. Lanjutkan?');
+  if (!yakin) return;
+  const btn = document.getElementById('resetBtn');
+  if (btn) btn.disabled = true;
+  setStatus('Mereset data...');
+  
+  google.script.run
+    .withSuccessHandler(res => {
+      cacheHasil = [];
+      renderTabel(cacheHasil);
+      setStatus((res && res.pesan) || 'Data berhasil direset.');
+      if (btn) btn.disabled = false;
+      muatTabel();
+    })
+    .withFailureHandler(err => {
+      setStatus((err && err.message) || 'Gagal mereset data.', true);
+      if (btn) btn.disabled = false;
+    })
+    .resetSemuaNilai();
+}
+
+// Jalankan pengambilan data pertama kali & setel auto-refresh tiap 1 detik (1000 ms)
+muatTabel();
+setInterval(muatTabel, 1000);
