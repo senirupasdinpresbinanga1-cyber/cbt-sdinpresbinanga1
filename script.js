@@ -1,4 +1,4 @@
-// ISI DENGAN URL APPS SCRIPT SPREADSHEET HASIL DEPLOYMENT ANDA
+// URL GOOGLE APPS SCRIPT ADMIN
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxYDj8ESSqPH-JIla4huWn_I8X12lrtEHNAkcmsrFoJOAQa8BjCriLh2BCAXpMxmSkKiw/exec";
 
 // Database Siswa Kelas 6A dan 6B
@@ -60,9 +60,9 @@ const validStudents = [
   { nisn: "0141239341", nama: "ZAM ZAMMY KHAIRIL MALIKI ABHAL", kelas: "6A" }
 ];
 
-// Penggabungan 160 Soal (PAI, Pancasila, B.Indo, MTK, IPAS, PJOK, Seni Budaya, B.Inggris)
+// 160 Soal (Campuran All Mapel)[cite: 1]
 const allQuestions = [
-  // PAI PG (1-15)
+  // PAI PG (1-15)[cite: 1]
   { id: 1, mapel: "PAI", type: "pg", text: "Rukun iman yang keenam adalah iman kepada ....", options: ["A. Rasul", "B. Hari akhir", "C. Qada dan Qadar", "D. Malaikat"], answer: 2 },
   { id: 2, mapel: "PAI", type: "pg", text: "Rudi sudah belajar dengan giat, tetapi nilai ulangannya belum sesuai harapan. Sikap yang sesuai dengan iman kepada Qada dan Qadar adalah ....", options: ["A. Menyalahkan gurunya", "B. Berhenti belajar", "C. Mencontek agar nilai naik", "D. Bersabar, mengevaluasi diri, dan tetap berusaha"], answer: 3 },
   { id: 3, mapel: "PAI", type: "pg", text: "Asmaul Husna Ar-Rahman berarti ....", options: ["A. Maha Pengasih", "B. Maha Melihat", "C. Maha Mendengar", "D. Maha Kuasa"], answer: 0 },
@@ -79,14 +79,14 @@ const allQuestions = [
   { id: 14, mapel: "PAI", type: "pg", text: "Husnuzan artinya ....", options: ["A. Prasangka buruk", "B. Iri hati", "C. Berprasangka baik", "D. Marah"], answer: 2 },
   { id: 15, mapel: "PAI", type: "pg", text: "Dua orang teman bertengkar. Andi lalu meminta maaf lebih dulu dan memaafkan temannya. Akhlak yang ditunjukkan Andi adalah ....", options: ["A. Tamak", "B. Hasad", "C. Takabur", "D. Pemaaf"], answer: 3 },
   
-  // PAI Uraian (16-20)
+  // PAI Uraian (16-20)[cite: 1]
   { id: 16, mapel: "PAI", type: "essay", text: "Jelaskan arti beriman kepada Qada dan Qadar, lalu berikan satu contoh penerapannya di sekolah!" },
   { id: 17, mapel: "PAI", type: "essay", text: "Dimas sudah berlatih keras, tetapi gagal menjuarai lomba. Ia kecewa dan ingin berhenti mengikuti lomba. Berikan nasihat kepada Dimas berdasarkan sikap sabar dan tawakal!" },
   { id: 18, mapel: "PAI", type: "essay", text: "Sebutkan empat sifat wajib rasul beserta artinya!" },
   { id: 19, mapel: "PAI", type: "essay", text: "Sebutkan tiga hal yang dapat membatalkan puasa!" },
   { id: 20, mapel: "PAI", type: "essay", text: "Saat ujian, Hana melihat temannya menyontek. Apa yang sebaiknya dilakukan Hana menurut akhlak terpuji? Jelaskan alasannya!" },
 
-  // Pancasila PG (21-35)
+  // Pancasila PG (21-35)[cite: 1]
   { id: 21, mapel: "Pancasila", type: "pg", text: "Sila ketiga Pancasila berbunyi ....", options: ["A. Kemanusiaan yang adil dan beradab", "B. Persatuan Indonesia", "C. Kerakyatan yang dipimpin oleh hikmat...", "D. Keadilan sosial..."], answer: 1 },
   { id: 22, mapel: "Pancasila", type: "pg", text: "Pak RT mengajak seluruh warga membersihkan selokan bersama-sama tanpa membedakan suku dan agama. Nilai yang tampak dari kegiatan tersebut adalah ....", options: ["A. Ketuhanan semata", "B. Kekuasaan", "C. Persaingan", "D. Persatuan dan gotong royong"], answer: 3 },
   { id: 23, mapel: "Pancasila", type: "pg", text: "Berikut yang termasuk hak warga negara adalah ....", options: ["A. Mendapatkan pendidikan", "B. Membayar pajak", "C. Menaati hukum", "D. Membela negara"], answer: 0 },
@@ -103,436 +103,120 @@ const allQuestions = [
   { id: 34, mapel: "Pancasila", type: "pg", text: "Di desa Sari, warga berbeda agama hidup rukun. Saat ada hari raya, mereka tidak mengganggu ibadah satu sama lain dan saling membantu. Sikap ini disebut ....", options: ["A. Toleransi", "B. Egoisme", "C. Diskriminasi", "D. Fanatisme"], answer: 0 },
   { id: 35, mapel: "Pancasila", type: "pg", text: "Beni menuntut haknya memakai fasilitas sekolah tetapi tidak mau ikut menjaga kebersihan. Sikap yang benar adalah ....", options: ["A. Menuntut hak saja", "B. Menjalankan kewajiban saja", "C. Tidak peduli", "D. Menjalankan kewajiban bersamaan dengan hak"], answer: 3 },
 
-  // Pancasila Uraian (36-40)
+  // Pancasila Uraian (36-40)[cite: 1]
   { id: 36, mapel: "Pancasila", type: "essay", text: "Tuliskan bunyi kelima sila Pancasila secara berurutan!" },
   { id: 37, mapel: "Pancasila", type: "essay", text: "Dua kelompok murid berselisih karena sama-sama ingin memakai lapangan untuk kegiatan pada hari yang sama. Bagaimana cara menyelesaikannya melalui musyawarah?" },
   { id: 38, mapel: "Pancasila", type: "essay", text: "Jelaskan perbedaan hak dan kewajiban, lalu berikan masing-masing dua contoh di lingkungan sekolah!" },
   { id: 39, mapel: "Pancasila", type: "essay", text: "Seorang siswa baru berbeda suku dan logat bicaranya sering diejek. Analisislah tindakan teman-temannya, sebutkan sila yang dilanggar, dan berikan solusinya!" },
   { id: 40, mapel: "Pancasila", type: "essay", text: "Jelaskan pentingnya gotong royong dan berikan dua contoh penerapannya di lingkungan tempat tinggalmu!" },
 
-  // Bahasa Indonesia PG (41-55)
-  { id: 41, mapel: "Bahasa Indonesia", type: "pg", text: "[Bacaan 1: Hutan Mangrove Penjaga Pantai]\nGagasan utama bacaan di atas adalah ....", options: ["A. Mangrove banyak ditebang", "B. Nelayan kesulitan mencari ikan", "C. Pentingnya hutan mangrove bagi pesisir", "D. Warga Desa Bahari menanam bibit"], answer: 2 },
-  { id: 42, mapel: "Bahasa Indonesia", type: "pg", text: "Manfaat akar mangrove menurut bacaan adalah ....", options: ["A. Menahan ombak sehingga abrasi berkurang", "B. Menyuburkan tambak", "C. Memperluas permukiman", "D. Menarik wisatawan"], answer: 0 },
-  { id: 43, mapel: "Bahasa Indonesia", type: "pg", text: "Hasil tangkapan nelayan menurun karena ....", options: ["A. Ombak semakin tenang", "B. Warga menanam bibit", "C. Jumlah nelayan bertambah", "D. Mangrove ditebang sehingga tempat berkembang biak ikan hilang"], answer: 3 },
-  { id: 44, mapel: "Bahasa Indonesia", type: "pg", text: "Arti kata 'abrasi' pada bacaan adalah ....", options: ["A. Banjir di daratan", "B. Pengikisan tepi pantai oleh ombak", "C. Kekeringan di pesisir", "D. Naiknya suhu udara"], answer: 1 },
-  { id: 45, mapel: "Bahasa Indonesia", type: "pg", text: "Sikap yang dapat diteladani dari warga Desa Bahari adalah ....", options: ["A. Peduli menjaga lingkungan dengan menanam mangrove", "B. Menebang pohon untuk tambak", "C. Menunggu bantuan", "D. Memindahkan permukiman"], answer: 0 },
-  { id: 46, mapel: "Bahasa Indonesia", type: "pg", text: "[Bacaan 2: Cerita Dani & Nenek Ina]\nWatak Dani dalam cerita adalah ....", options: ["A. Pemalas", "B. Pemarah", "C. Penolong", "D. Sombong"], answer: 2 },
-  { id: 47, mapel: "Bahasa Indonesia", type: "pg", text: "Latar waktu dan suasana pada cerita tersebut adalah ....", options: ["A. Malam hari yang sunyi", "B. Siang hari yang terik", "C. Sore hari yang berangin", "D. Pagi hari ketika hujan deras"], answer: 3 },
-  { id: 48, mapel: "Bahasa Indonesia", type: "pg", text: "Konflik batin yang dialami Dani adalah ....", options: ["A. Takut kepada Pak Satpam", "B. Ragu membantu Nenek karena takut terlambat", "C. Marah kepada Nenek Ina", "D. Malu memakai jas hujan sobek"], answer: 1 },
-  { id: 49, mapel: "Bahasa Indonesia", type: "pg", text: "Amanat cerita tersebut adalah ....", options: ["A. Kita hendaknya menolong sesama walaupun ada kepentingan pribadi", "B. Harus selalu datang paling awal", "C. Jas hujan harus baru", "D. Jangan berjalan saat hujan"], answer: 0 },
-  { id: 50, mapel: "Bahasa Indonesia", type: "pg", text: "Kejadian yang terjadi tepat setelah Dani membantu Nenek Ina adalah ....", options: ["A. Dani melihat Nenek kesulitan", "B. Dani merasa ragu", "C. Dani tiba di sekolah dan pagar sudah tertutup", "D. Pak Satpam tersenyum"], answer: 2 },
-  { id: 51, mapel: "Bahasa Indonesia", type: "pg", text: "Kalimat yang efektif adalah ....", options: ["A. Para siswa-siswa sedang membersihkan halaman sekolah.", "B. Mereka semua para siswa itu sedang bersih-bersih.", "C. Halaman dibersihkan oleh itu para siswa kelas.", "D. Para siswa sedang membersihkan halaman sekolah."], answer: 3 },
-  { id: 52, mapel: "Bahasa Indonesia", type: "pg", text: "Kalimat dengan ejaan yang tepat adalah ....", options: ["A. Ayah membeli buku, pensil, dan penggaris di Pasar Mamuju.", "B. Ayah membeli buku pensil dan penggaris di Pasar Mamuju.", "C. Ayah membeli buku, pensil, dan penggaris di pasar mamuju.", "D. ayah Membeli buku, pensil, dan penggaris di Pasar Mamuju."], answer: 0 },
-  { id: 53, mapel: "Bahasa Indonesia", type: "pg", text: "\"Kakiku mau patah karena berjalan seharian.\" Kalimat ini mengandung majas ....", options: ["A. Metafora", "B. Hiperbola", "C. Personifikasi", "D. Simile"], answer: 1 },
-  { id: 54, mapel: "Bahasa Indonesia", type: "pg", text: "Kata baku yang tepat adalah ....", options: ["A. Apotik", "B. Resiko", "C. Praktik", "D. Nasehat"], answer: 2 },
-  { id: 55, mapel: "Bahasa Indonesia", type: "pg", text: "Kalimat pembuka pidato yang paling sesuai adalah ....", options: ["A. \"Woi, dengarkan aku bicara!\"", "B. \"Bapak dan Ibu guru serta teman-teman yang saya hormati, ....\"", "C. \"Halo, aku mau cerita nih.\"", "D. \"Pokoknya hari ini aku mau bicara.\""], answer: 1 },
+  // Bahasa Indonesia PG (41-55)[cite: 1]
+  { id: 41, mapel: "Bahasa Indonesia", type: "pg", text: "Gagasan utama paragraf yang membahas fungsi hutan mangrove bagi perlindungan garis pantai dari abrasi adalah ....", options: ["A. Mangrove banyak ditebang", "B. Nelayan kesulitan mencari ikan", "C. Pentingnya hutan mangrove bagi pesisir", "D. Warga Desa Bahari menanam bibit"], answer: 2 },
+  { id: 42, mapel: "Bahasa Indonesia", type: "pg", text: "Manfaat akar mangrove bagi wilayah pesisir pantai adalah ....", options: ["A. Menahan ombak sehingga abrasi berkurang", "B. Menyuburkan tambak", "C. Memperluas permukiman", "D. Menarik wisatawan"], answer: 0 },
+  { id: 43, mapel: "Bahasa Indonesia", type: "pg", text: "Hasil tangkapan nelayan di pesisir dapat menurun apabila ....", options: ["A. Ombak semakin tenang", "B. Warga menanam bibit", "C. Jumlah nelayan bertambah", "D. Mangrove ditebang sehingga tempat berkembang biak ikan hilang"], answer: 3 },
+  { id: 44, mapel: "Bahasa Indonesia", type: "pg", text: "Arti kata 'abrasi' dalam konteks geografi pantai adalah ....", options: ["A. Banjir di daratan", "B. Pengikisan tepi pantai oleh air laut/ombak", "C. Kekeringan di pesisir", "D. Naiknya suhu udara"], answer: 1 },
+  { id: 45, mapel: "Bahasa Indonesia", type: "pg", text: "Sikap terpuji yang dapat diteladani dari kepedulian warga terhadap lingkungan pesisir adalah ....", options: ["A. Peduli menjaga lingkungan dengan menanam mangrove", "B. Menebang pohon untuk tambak", "C. Menunggu bantuan", "D. Memindahkan permukiman"], answer: 0 },
+  { id: 46, mapel: "Bahasa Indonesia", type: "pg", text: "Sifat atau watak tokoh yang suka menolong orang lain dalam cerita fiksi disebut tokoh yang ....", options: ["A. Pemalas", "B. Pemarah", "C. Penolong", "D. Sombong"], answer: 2 },
+  { id: 47, mapel: "Bahasa Indonesia", type: "pg", text: "Latar waktu dan suasana yang menggambarkan hujan deras di pagi hari memberikan kesan ....", options: ["A. Malam hari yang sunyi", "B. Siang hari yang terik", "C. Sore hari yang berangin", "D. Pagi hari ketika hujan deras"], answer: 3 },
+  { id: 48, mapel: "Bahasa Indonesia", type: "pg", text: "Perasaan bimbang atau ragu saat harus memilih antara menolong orang lain atau mengejar waktu pribadi merupakan bentuk ....", options: ["A. Takut kepada Pak Satpam", "B. Ragu membantu sesama karena takut terlambat", "C. Marah kepada orang lain", "D. Malu memakai jas hujan"], answer: 1 },
+  { id: 49, mapel: "Bahasa Indonesia", type: "pg", text: "Pesan moral atau amanat yang biasanya diselipkan dalam sebuah cerita anak adalah ....", options: ["A. Kita hendaknya menolong sesama walaupun ada kepentingan pribadi", "B. Harus selalu datang paling awal", "C. Jas hujan harus baru", "D. Jangan berjalan saat hujan"], answer: 0 },
+  { id: 50, mapel: "Bahasa Indonesia", type: "pg", text: "Bagian alur cerita yang menunjukkan penyelesaian masalah setelah tokoh berbuat baik dinamakan ....", options: ["A. Pengenalan", "B. Ragu", "C. Peristiwa setelah menolong", "D. Penyelesaian akhir"], answer: 2 },
+  { id: 51, mapel: "Bahasa Indonesia", type: "pg", text: "Kalimat yang sesuai dengan kaidah tata bahasa Indonesia yang baku dan efektif adalah ....", options: ["A. Para siswa-siswa sedang membersihkan halaman sekolah.", "B. Mereka semua para siswa itu sedang bersih-bersih.", "C. Halaman dibersihkan oleh itu para siswa kelas.", "D. Para siswa sedang membersihkan halaman sekolah."], answer: 3 },
+  { id: 52, mapel: "Bahasa Indonesia", type: "pg", text: "Penulisan huruf kapital dan tanda baca yang paling tepat terdapat pada kalimat ....", options: ["A. Ayah membeli buku, pensil, dan penggaris di Pasar Mamuju.", "B. Ayah membeli buku pensil dan penggaris di Pasar Mamuju.", "C. Ayah membeli buku, pensil, dan penggaris di pasar mamuju.", "D. ayah Membeli buku, pensil, dan penggaris di Pasar Mamuju."], answer: 0 },
+  { id: 53, mapel: "Bahasa Indonesia", type: "pg", text: "\"Kakiku mau patah karena berjalan seharian.\" Kalimat tersebut menggunakan gaya bahasa atau majas ....", options: ["A. Metafora", "B. Hiperbola", "C. Personifikasi", "D. Simile"], answer: 1 },
+  { id: 54, mapel: "Bahasa Indonesia", type: "pg", text: "Penulisan kata baku yang benar sesuai Kamus Besar Bahasa Indonesia (KBBI) adalah ....", options: ["A. Apotik", "B. Resiko", "C. Praktik", "D. Nasehat"], answer: 2 },
+  { id: 55, mapel: "Bahasa Indonesia", type: "pg", text: "Kalimat pembuka teks pidato resmi di depan umum yang santun adalah ....", options: ["A. \"Woi, dengarkan aku bicara!\"", "B. \"Bapak dan Ibu guru serta teman-teman yang saya hormati, ....\"", "C. \"Halo, aku mau cerita nih.\"", "D. \"Pokoknya hari ini aku mau bicara.\""], answer: 1 },
 
-  // Bahasa Indonesia Uraian (56-60)
-  { id: 56, mapel: "Bahasa Indonesia", type: "essay", text: "Ringkaslah bacaan 1 (Hutan Mangrove) menjadi dua kalimat!" },
-  { id: 57, mapel: "Bahasa Indonesia", type: "essay", text: "Dari bacaan 1, tuliskan dua penyebab dan dua akibat dari penebangan mangrove!" },
-  { id: 58, mapel: "Bahasa Indonesia", type: "essay", text: "Sebutkan watak Dani pada bacaan 2 beserta bukti dari cerita!" },
-  { id: 59, mapel: "Bahasa Indonesia", type: "essay", text: "Buatlah pidato singkat (4-5 kalimat) bertema 'Menjaga Kebersihan Sekolah'!" },
-  { id: 60, mapel: "Bahasa Indonesia", type: "essay", text: "Kembangkan gagasan utama 'Membaca bermanfaat bagi kita' menjadi satu paragraf (minimal 4 kalimat)!" },
+  // Bahasa Indonesia Uraian (56-60)[cite: 1]
+  { id: 56, mapel: "Bahasa Indonesia", type: "essay", text: "Buatlah ringkasan singkat mengenai pentingnya pelestarian lingkungan dalam dua kalimat!" },
+  { id: 57, mapel: "Bahasa Indonesia", type: "essay", text: "Sebutkan dua penyebab utama kerusakan lingkungan pesisir serta dua akibat yang ditimbulkannya!" },
+  { id: 58, mapel: "Bahasa Indonesia", type: "essay", text: "Jelaskan bagaimana cara menentukan watak tokoh dalam sebuah cerita narasi!" },
+  { id: 59, mapel: "Bahasa Indonesia", type: "essay", text: "Buatlah teks pidato singkat (4-5 kalimat) yang bertemakan 'Menjaga Kebersihan Lingkungan Sekolah'!" },
+  { id: 60, mapel: "Bahasa Indonesia", type: "essay", text: "Kembangkan gagasan utama 'Membaca adalah jendela dunia' menjadi satu paragraf utuh (minimal 4 kalimat)!" },
 
-  // Matematika PG (61-75)
-  { id: 61, mapel: "Matematika", type: "pg", text: "Suhu di puncak gunung -3 derajat Celsius, sedangkan di kaki gunung 25 derajat Celsius. Selisih suhunya adalah ....", options: ["A. 22 derajat Celsius", "B. 25 derajat Celsius", "C. 28 derajat Celsius", "D. 30 derajat Celsius"], answer: 2 },
-  { id: 62, mapel: "Matematika", type: "pg", text: "Sebuah kapal selam berada 40 m di bawah permukaan laut. Kapal naik 15 m, lalu turun lagi 30 m. Posisi akhir kapal selam adalah ....", options: ["A. 55 m di bawah permukaan laut", "B. 25 m di bawah permukaan laut", "C. 55 m di atas permukaan laut", "D. 85 m di bawah permukaan laut"], answer: 0 },
-  { id: 63, mapel: "Matematika", type: "pg", text: "Hasil dari (-12) + 8 - (-5) adalah ....", options: ["A. -9", "B. -1", "C. 1", "D. 9"], answer: 2 },
-  { id: 64, mapel: "Matematika", type: "pg", text: "Bu Sari memiliki 2 1/2 liter minyak. Hari pertama dipakai 3/4 liter, hari kedua 1 1/4 liter. Sisa minyak Bu Sari adalah ....", options: ["A. 1/4 liter", "B. 3/4 liter", "C. 1/2 liter", "D. 1 liter"], answer: 2 },
-  { id: 65, mapel: "Matematika", type: "pg", text: "Sebuah pita sepanjang 3,6 m dipotong-potong, tiap potong 0,45 m. Banyak potongan pita adalah ....", options: ["A. 8", "B. 7", "C. 9", "D. 6"], answer: 0 },
-  { id: 66, mapel: "Matematika", type: "pg", text: "Harga sebuah tas Rp150.000 mendapat diskon 20%. Uang yang harus dibayar adalah ....", options: ["A. Rp130.000", "B. Rp120.000", "C. Rp30.000", "D. Rp110.000"], answer: 1 },
-  { id: 67, mapel: "Matematika", type: "pg", text: "Dari 40 siswa, 35% menyukai sepak bola. Banyak siswa yang menyukai sepak bola adalah ....", options: ["A. 14 siswa", "B. 12 siswa", "C. 16 siswa", "D. 35 siswa"], answer: 0 },
-  { id: 68, mapel: "Matematika", type: "pg", text: "Perbandingan kelereng Budi dan Citra adalah 3 : 5. Jika jumlah kelereng mereka 48, maka kelereng Citra berjumlah ....", options: ["A. 18", "B. 24", "C. 30", "D. 36"], answer: 2 },
-  { id: 69, mapel: "Matematika", type: "pg", text: "Pada peta berskala 1 : 2.000.000, jarak dua kota pada peta adalah 4 cm. Jarak sebenarnya adalah ....", options: ["A. 8 km", "B. 40 km", "C. 800 km", "D. 80 km"], answer: 3 },
-  { id: 70, mapel: "Matematika", type: "pg", text: "Pak Dani memagari taman berbentuk persegi panjang berukuran 20 m x 15 m. Biaya pemagaran Rp25.000 per meter. Biaya seluruhnya adalah ....", options: ["A. Rp1.500.000", "B. Rp7.500.000", "C. Rp3.500.000", "D. Rp1.750.000"], answer: 3 },
-  { id: 71, mapel: "Matematika", type: "pg", text: "Sebuah bangun terdiri dari persegi bersisi 10 cm dan segitiga di atasnya dengan alas 10 cm dan tinggi 6 cm. Luas bangun tersebut adalah ....", options: ["A. 110 cm persegi", "B. 130 cm persegi", "C. 160 cm persegi", "D. 100 cm persegi"], answer: 1 },
-  { id: 72, mapel: "Matematika", type: "pg", text: "Luas lingkaran berdiameter 14 cm (pi = 22/7) adalah ....", options: ["A. 154 cm persegi", "B. 44 cm persegi", "C. 88 cm persegi", "D. 616 cm persegi"], answer: 0 },
-  { id: 73, mapel: "Matematika", type: "pg", text: "Bak mandi berbentuk kubus dengan sisi 80 cm terisi penuh air. Volume air tersebut adalah ....", options: ["A. 64 liter", "B. 512 liter", "C. 5.120 liter", "D. 640 liter"], answer: 1 },
-  { id: 74, mapel: "Matematika", type: "pg", text: "Akuarium berbentuk balok berukuran 60 cm x 40 cm x 30 cm diisi air setinggi 3/4 tinggi akuarium. Volume air adalah ....", options: ["A. 54 liter", "B. 72 liter", "C. 18 liter", "D. 54.000 liter"], answer: 0 },
-  { id: 75, mapel: "Matematika", type: "pg", text: "Rata-rata tiga nilai ulangan Dika adalah 80. Agar rata-rata empat ulangan menjadi 82, nilai ulangan keempat harus ....", options: ["A. 84", "B. 86", "C. 88", "D. 90"], answer: 2 },
+  // Matematika PG (61-75)[cite: 1]
+  { id: 61, mapel: "Matematika", type: "pg", text: "Suhu di puncak gunung adalah -3 derajat Celsius, sedangkan suhu di kaki gunung adalah 25 derajat Celsius. Selisih suhu antara puncak dan kaki gunung adalah ....", options: ["A. 22 derajat Celsius", "B. 25 derajat Celsius", "C. 28 derajat Celsius", "D. 30 derajat Celsius"], answer: 2 },
+  { id: 62, mapel: "Matematika", type: "pg", text: "Sebuah kapal selam berada 40 m di bawah permukaan laut. Kapal kemudian naik sejauh 15 m, lalu turun lagi sejauh 30 m. Posisi akhir kapal selam tersebut adalah ....", options: ["A. 55 m di bawah permukaan laut", "B. 25 m di bawah permukaan laut", "C. 55 m di atas permukaan laut", "D. 85 m di bawah permukaan laut"], answer: 0 },
+  { id: 63, mapel: "Matematika", type: "pg", text: "Hasil dari operasi hitung bilangan bulat: (-12) + 8 - (-5) adalah ....", options: ["A. -9", "B. -1", "C. 1", "D. 9"], answer: 2 },
+  { id: 64, mapel: "Matematika", type: "pg", text: "Bu Sari memiliki persediaan 2 1/2 liter minyak goreng. Pada hari pertama dipakai 3/4 liter, dan hari kedua 1 1/4 liter. Sisa minyak goreng Bu Sari adalah ....", options: ["A. 1/4 liter", "B. 3/4 liter", "C. 1/2 liter", "D. 1 liter"], answer: 2 },
+  { id: 65, mapel: "Matematika", type: "pg", text: "Sebuah pita panjangnya 3,6 m dipotong-potong sama panjang dengan ukuran masing-masing 0,45 m. Banyak potongan pita tersebut adalah ....", options: ["A. 8", "B. 7", "C. 9", "D. 6"], answer: 0 },
+  { id: 66, mapel: "Matematika", type: "pg", text: "Harga sebuah tas sekolah Rp150.000 dan mendapat potongan diskon sebesar 20%. Uang yang harus dibayar untuk membeli tas tersebut adalah ....", options: ["A. Rp130.000", "B. Rp120.000", "C. Rp30.000", "D. Rp110.000"], answer: 1 },
+  { id: 67, mapel: "Matematika", type: "pg", text: "Dari total 40 siswa di dalam kelas, sebanyak 35% menyukai kegiatan olahraga sepak bola. Banyak siswa yang menyukai sepak bola adalah ....", options: ["A. 14 siswa", "B. 12 siswa", "C. 16 siswa", "D. 35 siswa"], answer: 0 },
+  { id: 68, mapel: "Matematika", type: "pg", text: "Perbandingan kelereng Budi dan Citra adalah 3 : 5. Jika jumlah total kelereng mereka berdua adalah 48 buah, maka jumlah kelereng Citra adalah ....", options: ["A. 18", "B. 24", "C. 30", "D. 36"], answer: 2 },
+  { id: 69, mapel: "Matematika", type: "pg", text: "Pada peta dengan skala 1 : 2.000.000, jarak antara dua kota tergambar sepanjang 4 cm. Jarak sebenarnya antara kedua kota tersebut adalah ....", options: ["A. 8 km", "B. 40 km", "C. 800 km", "D. 80 km"], answer: 3 },
+  { id: 70, mapel: "Matematika", type: "pg", text: "Pak Dani ingin memagari taman berbentuk persegi panjang dengan ukuran 20 m x 15 m. Jika biaya pembuatan pagar Rp25.000 per meter, total biaya seluruhnya adalah ....", options: ["A. Rp1.500.000", "B. Rp7.500.000", "C. Rp3.500.000", "D. Rp1.750.000"], answer: 3 },
+  { id: 71, mapel: "Matematika", type: "pg", text: "Sebuah bangun datar gabungan terdiri dari persegi dengan sisi 10 cm dan segitiga di atasnya dengan alas 10 cm serta tinggi 6 cm. Luas total bangun tersebut adalah ....", options: ["A. 110 cm persegi", "B. 130 cm persegi", "C. 160 cm persegi", "D. 100 cm persegi"], answer: 1 },
+  { id: 72, mapel: "Matematika", type: "pg", text: "Luas lingkaran yang memiliki ukuran diameter 14 cm (menggunakan pi = 22/7) adalah ....", options: ["A. 154 cm persegi", "B. 44 cm persegi", "C. 88 cm persegi", "D. 616 cm persegi"], answer: 0 },
+  { id: 73, mapel: "Matematika", type: "pg", text: "Sebuah bak penampungan air berbentuk kubus dengan panjang rusuk 80 cm terisi penuh oleh air. Volume air di dalam bak tersebut adalah ....", options: ["A. 64 liter", "B. 512 liter", "C. 5.120 liter", "D. 640 liter"], answer: 1 },
+  { id: 74, mapel: "Matematika", type: "pg", text: "Akuarium berbentuk balok dengan ukuran 60 cm x 40 cm x 30 cm diisi air hingga mencapai 3/4 dari tinggi akuarium. Volume air dalam akuarium adalah ....", options: ["A. 54 liter", "B. 72 liter", "C. 18 liter", "D. 54.000 liter"], answer: 0 },
+  { id: 75, mapel: "Matematika", type: "pg", text: "Nilai rata-rata dari tiga kali ulangan matematika Dika adalah 80. Agar nilai rata-rata dari empat kali ulangan menjadi 82, maka nilai ulangan keempat yang harus diperoleh Dika adalah ....", options: ["A. 84", "B. 86", "C. 88", "D. 90"], answer: 2 },
 
-  // Matematika Uraian (76-80)
-  { id: 76, mapel: "Matematika", type: "essay", text: "Sebuah gedung memiliki 3 lantai basement di bawah lantai dasar. Rina naik lift dari basement 3 ke lantai 5, lalu turun 2 lantai. Di lantai berapa Rina sekarang?" },
-  { id: 77, mapel: "Matematika", type: "essay", text: "Dina membawa uang Rp500.000. Ia ingin membeli sepatu Rp350.000 dan tas Rp250.000. Keduanya diskon 20%. Cukupkah uang Dina? Jelaskan!" },
-  { id: 78, mapel: "Matematika", type: "essay", text: "Resep kue untuk 4 orang memerlukan 300 g tepung, 100 g gula, dan 2 butir telur. Berapa bahan yang diperlukan untuk 10 orang?" },
-  { id: 79, mapel: "Matematika", type: "essay", text: "Kolam renang berbentuk balok berukuran 12 m x 6 m x 1,5 m. Kolam diisi air dengan pompa 9 m kubik per jam. Berapa jam waktu sampai penuh?" },
-  { id: 80, mapel: "Matematika", type: "essay", text: "Dari 40 siswa kelas VI, 16 siswa suka olahraga, 12 membaca, 8 menggambar, sisa hobi lain. Tentukan persentase tiap hobi & hobi paling diminati!" },
+  // Matematika Uraian (76-80)[cite: 1]
+  { id: 76, mapel: "Matematika", type: "essay", text: "Jelaskan cara menghitung operasi bilangan bulat negatif dan positif dalam kehidupan sehari-hari beserta contohnya!" },
+  { id: 77, mapel: "Matematika", type: "essay", text: "Hitunglah total diskon dan sisa uang kembalian jika seseorang berbelanja sebesar Rp600.000 dengan diskon 15%!" },
+  { id: 78, mapel: "Matematika", type: "essay", text: "Sebuah resep kue memerlukan perbandingan bahan tertentu. Jelaskan cara menghitung kebutuhan bahan jika porsi digandakan!" },
+  { id: 79, mapel: "Matematika", type: "essay", text: "Hitunglah waktu yang diperlukan untuk mengisi penuh kolam renang berbentuk balok dengan debit air tertentu!" },
+  { id: 80, mapel: "Matematika", type: "essay", text: "Sajikan data hobi siswa dalam bentuk persentase dan jelaskan cara membaca diagramnya!" },
 
-  // IPAS PG (81-95)
-  { id: 81, mapel: "IPAS", type: "pg", text: "Organ tubuh yang berfungsi memompa darah ke seluruh tubuh adalah ....", options: ["A. Paru-paru", "B. Jantung", "C. Lambung", "D. Ginjal"], answer: 1 },
-  { id: 82, mapel: "IPAS", type: "pg", text: "Rafi berlari selama 10 menit. Napasnya menjadi lebih cepat dan jantungnya berdetak lebih kencang. Penjelasan yang tepat adalah ....", options: ["A. Tubuh Rafi sedang sakit", "B. Paru-parunya mengalami kerusakan", "C. Jantungnya lelah selamanya", "D. Otot membutuhkan lebih banyak oksigen"], answer: 3 },
-  { id: 83, mapel: "IPAS", type: "pg", text: "Fungsi utama usus halus adalah ....", options: ["A. Menyerap sari-sari makanan", "B. Menyimpan sisa makanan", "C. Menyaring darah", "D. Memompa darah"], answer: 0 },
-  { id: 84, mapel: "IPAS", type: "pg", text: "Urutan jalannya makanan dalam sistem pencernaan yang benar adalah ....", options: ["A. Mulut, lambung, kerongkongan, usus halus", "B. Kerongkongan, mulut, lambung, usus halus", "C. Mulut, kerongkongan, lambung, usus halus", "D. Mulut, usus halus, lambung, kerongkongan"], answer: 2 },
-  { id: 85, mapel: "IPAS", type: "pg", text: "Zat gizi yang menjadi sumber tenaga utama bagi tubuh adalah ....", options: ["A. Vitamin", "B. Karbohidrat", "C. Mineral", "D. Serat"], answer: 1 },
-  { id: 86, mapel: "IPAS", type: "pg", text: "Ani sering sarapan hanya dengan minuman manis, lalu cepat lemas. Saran yang paling tepat adalah ....", options: ["A. Tidak perlu sarapan", "B. Minum lebih banyak minuman manis", "C. Tidur di kelas", "D. Sarapan bergizi seimbang"], answer: 3 },
-  { id: 87, mapel: "IPAS", type: "pg", text: "Perubahan energi listrik menjadi energi cahaya terjadi pada ....", options: ["A. Lampu yang menyala", "B. Kompor gas", "C. Kipas angin", "D. Radio"], answer: 0 },
-  { id: 88, mapel: "IPAS", type: "pg", text: "Ketika setrika listrik dinyalakan, energi listrik berubah menjadi energi ....", options: ["A. Gerak", "B. Bunyi", "C. Panas", "D. Kimia"], answer: 2 },
-  { id: 89, mapel: "IPAS", type: "pg", text: "Sebuah desa pesisir ingin memiliki listrik ramah lingkungan dan tidak habis. Pilihan tepat adalah ....", options: ["A. Batu bara", "B. Panel surya", "C. Genset solar", "D. Bakar kayu"], answer: 1 },
-  { id: 90, mapel: "IPAS", type: "pg", text: "Sampah yang paling mudah terurai oleh alam adalah ....", options: ["A. Botol plastik", "B. Pecahan kaca", "C. Kaleng bekas", "D. Daun kering"], answer: 3 },
-  { id: 91, mapel: "IPAS", type: "pg", text: "Banyak ikan di sungai mati setelah warga membuang limbah ke sungai. Penyebab utamanya adalah ....", options: ["A. Pencemaran air", "B. Musim hujan", "C. Ikan terlalu banyak", "D. Sungai dalam"], answer: 0 },
-  { id: 92, mapel: "IPAS", type: "pg", text: "Rantai makanan di sawah: padi, tikus, ular, elang. Jika ular berkurang drastis, tikus akan ....", options: ["A. Berkurang", "B. Tetap", "C. Bertambah banyak", "D. Hilang"], answer: 2 },
-  { id: 93, mapel: "IPAS", type: "pg", text: "Orang yang menggunakan atau membeli barang untuk memenuhi kebutuhannya disebut ....", options: ["A. Produsen", "B. Konsumen", "C. Distributor", "D. Pedagang"], answer: 1 },
-  { id: 94, mapel: "IPAS", type: "pg", text: "Menjelang hari raya, harga cabai naik. Penyebab yang paling mungkin adalah ....", options: ["A. Permintaan meningkat persediaan terbatas", "B. Persediaan cabai banyak", "C. Tidak ada yang membeli", "D. Cabai tidak laku"], answer: 0 },
-  { id: 95, mapel: "IPAS", type: "pg", text: "Teks Proklamasi Kemerdekaan Indonesia dibacakan oleh ....", options: ["A. Jenderal Sudirman", "B. Ki Hajar Dewantara", "C. Moh. Yamin", "D. Ir. Soekarno dan Drs. Moh. Hatta"], answer: 3 },
+  // IPAS PG (81-95)[cite: 1]
+  { id: 81, mapel: "IPAS", type: "pg", text: "Organ utama dalam sistem peredaran darah manusia yang bertugas memompa darah ke seluruh tubuh adalah ....", options: ["A. Paru-paru", "B. Jantung", "C. Lambung", "D. Ginjal"], answer: 1 },
+  { id: 82, mapel: "IPAS", type: "pg", text: "Setelah berlari kencang selama 10 menit, napas seseorang menjadi lebih cepat dan detak jantung meningkat. Hal ini terjadi karena ....", options: ["A. Tubuh sedang sakit", "B. Paru-paru mengalami kerusakan", "C. Jantung lelah selamanya", "D. Otot tubuh membutuhkan lebih banyak suplai oksigen"], answer: 3 },
+  { id: 83, mapel: "IPAS", type: "pg", text: "Fungsi utama dari organ usus halus dalam sistem pencernaan manusia adalah ....", options: ["A. Menyerap sari-sari makanan ke dalam darah", "B. Menyimpan sisa makanan", "C. Menyaring racun di dalam darah", "D. Memompa aliran darah"], answer: 0 },
+  { id: 84, mapel: "IPAS", type: "pg", text: "Urutan saluran pencernaan makanan pada manusia yang benar secara berurutan adalah ....", options: ["A. Mulut, lambung, kerongkongan, usus halus", "B. Kerongkongan, mulut, lambung, usus halus", "C. Mulut, kerongkongan, lambung, usus halus", "D. Mulut, usus halus, lambung, kerongkongan"], answer: 2 },
+  { id: 85, mapel: "IPAS", type: "pg", text: "Jenis zat gizi makanan yang berfungsi sebagai sumber energi utama bagi aktivitas tubuh sehari-hari adalah ....", options: ["A. Vitamin", "B. Karbohidrat", "C. Mineral", "D. Serat"], answer: 1 },
+  { id: 86, mapel: "IPAS", type: "pg", text: "Siswa yang terbiasa sarapan dengan menu bergizi seimbang akan lebih fokus belajar dibandingkan yang hanya mengonsumsi makanan/minuman manis. Saran yang tepat adalah ....", options: ["A. Tidak perlu sarapan pagi", "B. Minum lebih banyak minuman berpemanis buatan", "C. Tidur di dalam kelas", "D. Membiasakan sarapan dengan menu bergizi seimbang"], answer: 3 },
+  { id: 87, mapel: "IPAS", type: "pg", text: "Perubahan bentuk energi listrik menjadi energi cahaya dapat diamati pada peristiwa ....", options: ["A. Lampu listrik yang menyala", "B. Kompor gas yang menyala", "C. Kipas angin berputar", "D. Radio berbunyi"], answer: 0 },
+  { id: 88, mapel: "IPAS", type: "pg", text: "Ketika sebuah setrika listrik dihubungkan ke arus listrik, terjadi perubahan energi listrik menjadi energi ....", options: ["A. Gerak", "B. Bunyi", "C. Panas", "D. Kimia"], answer: 2 },
+  { id: 89, mapel: "IPAS", type: "pg", text: "Sumber energi alternatif ramah lingkungan yang memanfaatkan tenaga sinar matahari adalah ....", options: ["A. Batu bara", "B. Panel surya", "C. Genset berbahan bakar solar", "D. Kayu bakar"], answer: 1 },
+  { id: 90, mapel: "IPAS", type: "pg", text: "Jenis sampah rumah tangga yang paling mudah terurai secara alami oleh mikroorganisme tanah adalah ....", options: ["A. Botol plastik kemasan", "B. Pecahan kaca", "C. Kaleng bekas", "D. Daun kering"], answer: 3 },
+  { id: 91, mapel: "IPAS", type: "pg", text: "Banyak ikan di sungai yang mendadak mati setelah tercemar limbah beracun dari pabrik. Permasalahan ini merupakan contoh dari ....", options: ["A. Pencemaran air sungai", "B. Perubahan musim hujan", "C. Jumlah populasi ikan terlalu padat", "D. Aliran sungai yang terlalu dalam"], answer: 0 },
+  { id: 92, mapel: "IPAS", type: "pg", text: "Dalam ekosistem sawah terdapat rantai makanan: padi -> tikus -> ular -> elang. Jika populasi ular berkurang drastis, maka jumlah populasi tikus akan ....", options: ["A. Berkurang", "B. Tetap stabil", "C. Bertambah banyak", "D. Punah seketika"], answer: 2 },
+  { id: 93, mapel: "IPAS", type: "pg", text: "Pelaku ekonomi yang menggunakan atau mengonsumsi barang dan jasa untuk memenuhi kebutuhan hidupnya disebut ....", options: ["A. Produsen", "B. Konsumen", "C. Distributor", "D. Pedagang"], answer: 1 },
+  { id: 94, mapel: "IPAS", type: "pg", text: "Menjelang hari besar keagamaan, harga kebutuhan pokok seperti cabai biasanya mengalami kenaikan. Faktor utama penyebabnya adalah ....", options: ["A. Permintaan pasar meningkat sedangkan ketersediaan terbatas", "B. Persediaan barang sangat melimpah", "C. Tidak ada warga yang membeli", "D. Barang dagangan tidak laku"], answer: 0 },
+  { id: 95, mapel: "IPAS", type: "pg", text: "Tokoh penting proklamator yang membacakan Teks Proklamasi Kemerdekaan Republik Indonesia pada 17 Agustus 1945 adalah ....", options: ["A. Jenderal Sudirman", "B. Ki Hajar Dewantara", "C. Moh. Yamin", "D. Ir. Soekarno dan Drs. Moh. Hatta"], answer: 3 },
 
-  // IPAS Uraian (96-100)
-  { id: 96, mapel: "IPAS", type: "essay", text: "Jelaskan perjalanan makanan dari mulut hingga menjadi sisa pembuangan, sebutkan organ yang dilalui!" },
-  { id: 97, mapel: "IPAS", type: "essay", text: "Ani selalu sarapan minuman manis. Analisislah dampaknya bagi tubuh dan susunlah menu sarapan bergizi seimbang!" },
-  { id: 98, mapel: "IPAS", type: "essay", text: "Pada rantai makanan padi, tikus, ular, elang; jika elang sering diburu manusia hingga habis, jelaskan dampaknya!" },
-  { id: 99, mapel: "IPAS", type: "essay", text: "Sebutkan tiga contoh perubahan energi yang terjadi di rumah dan jelaskan!" },
-  { id: 100, mapel: "IPAS", type: "essay", text: "Sungai dekat desa menjadi keruh dan berbau karena sampah. Berikan tiga solusi yang dapat dilakukan warga!" },
+  // IPAS Uraian (96-100)[cite: 1]
+  { id: 96, mapel: "IPAS", type: "essay", text: "Jelaskan proses pencernaan makanan di dalam tubuh manusia secara berurutan!" },
+  { id: 97, mapel: "IPAS", type: "essay", text: "Sebutkan komponen menu sarapan sehat bergizi seimbang dan jelaskan manfaatnya bagi tubuh!" },
+  { id: 98, mapel: "IPAS", type: "essay", text: "Analisislah dampak ekologis jika predator puncak dalam rantai makanan mengalami kepunahan!" },
+  { id: 99, mapel: "IPAS", type: "essay", text: "Berikan tiga contoh pemanfaatan perubahan energi dalam kehidupan sehari-hari di rumah!" },
+  { id: 100, mapel: "IPAS", type: "essay", text: "Jelaskan langkah-langkah konkret dalam menjaga kelestarian ekosistem sungai dari pencemaran!" },
 
-  // PJOK PG (101-115)
-  { id: 101, mapel: "PJOK", type: "pg", text: "Berikut yang termasuk permainan bola besar adalah ....", options: ["A. Kasti", "B. Bulu tangkis", "C. Sepak bola", "D. Tenis meja"], answer: 2 },
-  { id: 102, mapel: "PJOK", type: "pg", text: "Teknik dasar mengoper bola pendek dalam sepak bola menggunakan ....", options: ["A. Kaki bagian dalam", "B. Ujung jari kaki", "C. Tumit", "D. Lutut"], answer: 0 },
-  { id: 103, mapel: "PJOK", type: "pg", text: "Dalam permainan kasti, pemain yang bertugas melambungkan bola kepada pemukul disebut ....", options: ["A. Penjaga", "B. Pemukul", "C. Penangkap", "D. Pelambung"], answer: 3 },
-  { id: 104, mapel: "PJOK", type: "pg", text: "Urutan gerakan lompat jauh yang benar adalah ....", options: ["A. Awalan, melayang, tumpuan, mendarat", "B. Awalan, tumpuan, melayang, mendarat", "C. Tumpuan, awalan, melayang, mendarat", "D. Mendarat, tumpuan, melayang, awalan"], answer: 1 },
-  { id: 105, mapel: "PJOK", type: "pg", text: "Start yang digunakan pada lari jarak pendek adalah start ....", options: ["A. Berdiri", "B. Melayang", "C. Jongkok", "D. Duduk"], answer: 2 },
-  { id: 106, mapel: "PJOK", type: "pg", text: "Sebelum melakukan guling depan, hal yang wajib dilakukan adalah ....", options: ["A. Pemanasan agar otot siap", "B. Langsung berguling", "C. Makan banyak", "D. Tidur"], answer: 0 },
-  { id: 107, mapel: "PJOK", type: "pg", text: "Pada guling depan, posisi kepala yang benar adalah ....", options: ["A. Kepala tegak", "B. Ubun-ubun menyentuh matras", "C. Kepala menoleh", "D. Dagu menempel ke dada dan tengkuk menyentuh matras"], answer: 3 },
-  { id: 108, mapel: "PJOK", type: "pg", text: "Lari selama 12 menit (tes Cooper) digunakan untuk mengukur ....", options: ["A. Kekuatan lengan", "B. Daya tahan jantung dan paru-paru", "C. Kelincahan", "D. Keseimbangan"], answer: 1 },
-  { id: 109, mapel: "PJOK", type: "pg", text: "Pendinginan setelah berolahraga bertujuan untuk ....", options: ["A. Menurunkan denyut jantung secara bertahap", "B. Menambah lelah", "C. Menaikkan suhu", "D. Menghentikan seketika"], answer: 0 },
-  { id: 110, mapel: "PJOK", type: "pg", text: "Lama tidur yang dianjurkan bagi anak usia SD sekitar ....", options: ["A. 4 - 5 jam", "B. 6 jam", "C. 9 - 11 jam", "D. 14 jam"], answer: 2 },
-  { id: 111, mapel: "PJOK", type: "pg", text: "Temanmu terjatuh saat bermain bola sehingga lututnya lecet. Pertolongan pertama yang tepat adalah ....", options: ["A. Membiarkan terbuka", "B. Tabur tanah", "C. Tetap bermain", "D. Bersihkan air bersih lalu tutup plester"], answer: 3 },
-  { id: 112, mapel: "PJOK", type: "pg", text: "Tim kelas VI-A kalah kasti. Sikap sportif yang ditunjukkan adalah ....", options: ["A. Menuduh wasit curang", "B. Menerima kekalahan dan beri selamat pemenang", "C. Marah", "D. Mengejek lawan"], answer: 1 },
-  { id: 113, mapel: "PJOK", type: "pg", text: "Salah satu cara menjaga kebersihan diri adalah ....", options: ["A. Mandi dan gosok gigi teratur", "B. Baju sama berhari-hari", "C. Jarang cuci tangan", "D. Potong kuku setahun sekali"], answer: 0 },
-  { id: 114, mapel: "PJOK", type: "pg", text: "Jumlah pemain inti dalam satu regu permainan bola voli adalah ....", options: ["A. 5", "B. 7", "C. 6", "D. 11"], answer: 2 },
-  { id: 115, mapel: "PJOK", type: "pg", text: "Rendi ingin meningkatkan kebugaran tanpa alat. Pilihan paling tepat adalah ....", options: ["A. Nonton TV", "B. Tidur siang", "C. Makan manis", "D. Berlari pagi dan lompat tali rutin"], answer: 3 },
+  // PJOK PG (101-115)[cite: 1]
+  { id: 101, mapel: "PJOK", type: "pg", text: "Cabang olahraga beregu yang menggunakan bola besar antara lain adalah ....", options: ["A. Kasti", "B. Bulu tangkis", "C. Sepak bola", "D. Tenis meja"], answer: 2 },
+  { id: 102, mapel: "PJOK", type: "pg", text: "Teknik dasar menendang atau mengoper bola jarak dekat dalam permainan sepak bola umumnya menggunakan ....", options: ["A. Kaki bagian dalam", "B. Ujung jari kaki", "C. Tumit kaki", "D. Lutut kaki"], answer: 0 },
+  { id: 103, mapel: "PJOK", type: "pg", text: "Dalam permainan bola kasti, pemain yang bertugas melambungkan bola ke arah pemukul dengan akurat disebut ....", options: ["A. Penjaga lapangan", "B. Pemukul", "C. Penangkap bola", "D. Pelambung (pitcher)"], answer: 3 },
+  { id: 104, mapel: "PJOK", type: "pg", text: "Urutan tahapan gerakan dalam cabang atletik lompat jauh yang benar adalah ....", options: ["A. Awalan, melayang, tumpuan, mendarat", "B. Awalan, tumpuan, melayang, mendarat", "C. Tumpuan, awalan, melayang, mendarat", "D. Mendarat, tumpuan, melayang, awalan"], answer: 1 },
+  { id: 105, mapel: "PJOK", type: "pg", text: "Jenis teknik start yang digunakan oleh pelari dalam lomba lari jarak pendek (sprint) adalah start ....", options: ["A. Berdiri", "B. Melayang", "C. Jongkok", "D. Duduk"], answer: 2 },
+  { id: 106, mapel: "PJOK", type: "pg", text: "Sebelum melakukan rangkaian gerakan senam lantai seperti guling depan, hal utama yang wajib dilakukan adalah ....", options: ["A. Melakukan pemanasan (warming up) untuk melemaskan otot", "B. Langsung melakukan gulingan", "C. Makan makanan berat", "D. Tidur telentang"], answer: 0 },
+  { id: 107, mapel: "PJOK", type: "pg", text: "Posisi kepala yang benar saat melakukan gerakan guling depan (roll depan) di atas matras adalah ....", options: ["A. Kepala tegak lurus ke depan", "B. Bagian ubun-ubun menyentuh matras", "C. Kepala menoleh ke samping", "D. Dagu menempel ke dada dan bagian tengkuk menyentuh matras"], answer: 3 },
+  { id: 108, mapel: "PJOK", type: "pg", text: "Tes kebugaran jasmani berupa lari selama 12 menit (Cooper Test) bertujuan untuk mengukur tingkat ....", options: ["A. Kekuatan otot lengan", "B. Daya tahan jantung dan paru-paru (cardiorespiratory endurance)", "C. Kelincahan tubuh", "D. Keseimbangan fisik"], answer: 1 },
+  { id: 109, mapel: "PJOK", type: "pg", text: "Tujuan utama melakukan sesi pendinginan (cooling down) setelah berolahraga inti adalah ....", options: ["A. Menurunkan denyut nadi dan suhu tubuh secara bertahap", "B. Menambah rasa lelah", "C. Menaikkan suhu tubuh secara drastis", "D. Menghentikan aktivitas seketika"], answer: 0 },
+  { id: 110, mapel: "PJOK", type: "pg", text: "Kebutuhan waktu istirahat tidur malam yang ideal bagi anak usia sekolah dasar (SD) setiap harinya adalah sekitar ....", options: ["A. 4 - 5 jam", "B. 6 jam", "C. 9 - 11 jam", "D. 14 jam"], answer: 2 },
+  { id: 111, mapel: "PJOK", type: "pg", text: "Ketika teman mengalami luka lecet di lutut akibat terjatuh di lapangan, tindakan pertolongan pertama yang tepat adalah ....", options: ["A. Membiarkan luka terbuka begitu saja", "B. Menaburkan tanah pada luka", "C. Meminta untuk terus bermain", "D. Membersihkan luka dengan air bersih lalu menutupnya dengan plester antiseptik"], answer: 3 },
+  { id: 112, mapel: "PJOK", type: "pg", text: "Sikap sportif yang harus ditunjukkan oleh regu yang mengalami kekalahan dalam sebuah pertandingan olahraga adalah ....", options: ["A. Menuduh wasit berlaku curang", "B. Menerima kekalahan dengan lapang dada dan memberi selamat kepada pemenang", "C. Marah-marah di lapangan", "D. Mengejek regu lawan"], answer: 1 },
+  { id: 113, mapel: "PJOK", type: "pg", text: "Salah satu perilaku hidup bersih dan sehat (PHBS) dalam menjaga kebersihan badan adalah ....", options: ["A. Mandi dan menggosok gigi secara teratur", "B. Memakai pakaian yang sama selama berhari-hari", "C. Jarang mencuci tangan sebelum makan", "D. Memotong kuku setahun sekali"], answer: 0 },
+  { id: 114, mapel: "PJOK", type: "pg", text: "Jumlah pemain inti dalam setiap regu yang bertanding pada permainan bola voli adalah ....", options: ["A. 5 pemain", "B. 7 pemain", "C. 6 pemain", "D. 11 pemain"], answer: 2 },
+  { id: 115, mapel: "PJOK", type: "pg", text: "Cara sederhana untuk menjaga kebugaran jasmani tanpa harus menggunakan alat mahal adalah ....", options: ["A. Menonton televisi seharian", "B. Tidur siang terus-menerus", "C. Sering mengonsumsi makanan manis", "D. Berolahraga lari pagi dan lompat tali secara teratur"], answer: 3 },
 
-  // PJOK Uraian (116-120)
-  { id: 116, mapel: "PJOK", type: "essay", text: "Tuliskan urutan gerakan lompat jauh dan jelaskan singkat tiap tahapannya!" },
-  { id: 117, mapel: "PJOK", type: "essay", text: "Jelaskan manfaat pemanasan dan pendinginan dalam berolahraga!" },
-  { id: 118, mapel: "PJOK", type: "essay", text: "Saat bermain, temanmu terjatuh dan lengannya berdarah. Tuliskan langkah pertolongan pertama!" },
-  { id: 119, mapel: "PJOK", type: "essay", text: "Tono menyentuh bola ketika keluar garis tapi tidak mengaku. Analisislah sikap Tono dan sikap yang seharusnya!" },
-  { id: 120, mapel: "PJOK", type: "essay", text: "Susunlah jadwal sederhana kegiatan sehari-hari yang mencerminkan pola hidup sehat!" },
+  // PJOK Uraian (116-120)[cite: 1]
+  { id: 116, mapel: "PJOK", type: "essay", text: "Jelaskan tahapan melakukan lompat jauh mulai dari awalan hingga pendaratan!" },
+  { id: 117, mapel: "PJOK", type: "essay", text: "Apa pentingnya pemanasan dan pendinginan dalam berolahraga? Jelaskan!" },
+  { id: 118, mapel: "PJOK", type: "essay", text: "Bagaimana langkah penanganan pertama pada cedera luka ringan di sekolah?" },
+  { id: 119, mapel: "PJOK", type: "essay", text: "Jelaskan pentingnya menjunjung tinggi sportivitas dalam pertandingan olahraga!" },
+  { id: 120, mapel: "PJOK", type: "essay", text: "Susunlah contoh rutinitas harian yang mencerminkan pola hidup sehat secara fisik dan mental!" },
 
-  // Seni Budaya PG (121-135)
-  { id: 121, mapel: "Seni Budaya", type: "pg", text: "Unsur seni rupa yang terbentuk dari titik yang bergerak adalah ....", options: ["A. Bidang", "B. Garis", "C. Warna", "D. Tekstur"], answer: 1 },
-  { id: 122, mapel: "Seni Budaya", type: "pg", text: "Warna primer terdiri atas ....", options: ["A. Hijau, jingga, ungu", "B. Hitam, putih, abu-abu", "C. Merah, hijau, biru muda", "D. Merah, kuning, biru"], answer: 3 },
-  { id: 123, mapel: "Seni Budaya", type: "pg", text: "Campuran warna merah dan kuning menghasilkan warna ....", options: ["A. Jingga", "B. Hijau", "C. Ungu", "D. Cokelat"], answer: 0 },
-  { id: 124, mapel: "Seni Budaya", type: "pg", text: "Kelompok warna hangat adalah ....", options: ["A. Biru, hijau, ungu", "B. Biru, putih, hitam", "C. Merah, jingga, kuning", "D. Ungu, biru, hijau"], answer: 2 },
-  { id: 125, mapel: "Seni Budaya", type: "pg", text: "Karya seni rupa dua dimensi adalah ....", options: ["A. Patung", "B. Lukisan", "C. Keramik", "D. Ukiran kayu"], answer: 1 },
-  { id: 126, mapel: "Seni Budaya", type: "pg", text: "Fungsi utama poster adalah ....", options: ["A. Menghias ruangan", "B. Menyimpan benda", "C. Alat tulis", "D. Menyampaikan pesan/ajakan secara visual"], answer: 3 },
-  { id: 127, mapel: "Seni Budaya", type: "pg", text: "Teknik arsir dalam menggambar adalah ....", options: ["A. Membuat garis-garis sejajar rapat untuk kesan gelap terang", "B. Menempel kertas", "C. Menekan lilin", "D. Memahat"], answer: 0 },
-  { id: 128, mapel: "Seni Budaya", type: "pg", text: "Berikut yang termasuk karya seni rupa tiga dimensi adalah ....", options: ["A. Kolase", "B. Batik", "C. Patung", "D. Lukisan"], answer: 2 },
-  { id: 129, mapel: "Seni Budaya", type: "pg", text: "Membuat pot bunga dari botol plastik bekas termasuk kerajinan ....", options: ["A. Lukis", "B. Daur ulang", "C. Cetak", "D. Anyaman"], answer: 1 },
-  { id: 130, mapel: "Seni Budaya", type: "pg", text: "Kolase adalah karya seni yang dibuat dengan cara ....", options: ["A. Menempelkan berbagai bahan pada bidang gambar", "B. Memahat batu", "C. Mencetak balok", "D. Cat air"], answer: 0 },
-  { id: 131, mapel: "Seni Budaya", type: "pg", text: "Teknik membuat batik secara umum adalah ....", options: ["A. Memahat kain", "B. Menjahit", "C. Menganyam", "D. Menutup bagian kain dengan lilin (malam) lalu dicelup warna"], answer: 3 },
-  { id: 132, mapel: "Seni Budaya", type: "pg", text: "Kain tradisional khas Sulawesi Barat adalah ....", options: ["A. Ulos", "B. Songket Palembang", "C. Sutra Mandar", "D. Tenun Sumba"], answer: 2 },
-  { id: 133, mapel: "Seni Budaya", type: "pg", text: "Prinsip keseimbangan dalam karya seni rupa adalah ....", options: ["A. Penataan unsur agar terlihat serasi dan stabil", "B. Satu warna saja", "C. Objek sebesar-besarnya", "D. Mengosongkan bidang"], answer: 0 },
-  { id: 134, mapel: "Seni Budaya", type: "pg", text: "Tujuan diadakannya pameran karya seni di sekolah adalah ....", options: ["A. Cari kesalahan", "B. Menghargai karya dan menampilkan ke orang lain", "C. Mengejek", "D. Membandingkan nilai"], answer: 1 },
-  { id: 135, mapel: "Seni Budaya", type: "pg", text: "Budi ingin menampilkan kesan jarak jauh dalam gambar pemandangan, tekniknya ....", options: ["A. Objek jauh lebih besar", "B. Sama besar", "C. Satu warna tebal", "D. Objek jauh digambar lebih kecil & warna pudar"], answer: 3 },
-
-  // Seni Budaya Uraian (136-140)
-  { id: 136, mapel: "Seni Budaya", type: "essay", text: "Jelaskan perbedaan warna primer dan warna sekunder, lalu berikan contohnya!" },
-  { id: 137, mapel: "Seni Budaya", type: "essay", text: "Tuliskan langkah-langkah membuat karya kolase dari bahan bekas!" },
-  { id: 138, mapel: "Seni Budaya", type: "essay", text: "Kamu diminta membuat poster bertema 'Cintai Lingkungan'. Jelaskan unsur-unsur yang harus ada!" },
-  { id: 139, mapel: "Seni Budaya", type: "essay", text: "Membuat tempat pensil dari kaleng bekas. Analisislah manfaatnya bagi lingkungan dan bagi siswa!" },
-  { id: 140, mapel: "Seni Budaya", type: "essay", text: "Mengapa kain tenun/sutra Mandar perlu dilestarikan? Berikan 2 alasan dan 1 cara melestarikannya!" },
-
-  // Bahasa Inggris PG (141-155)
-  { id: 141, mapel: "Bahasa Inggris", type: "pg", text: "[Text Sinta]\nHow old is Sinta?", options: ["A. Eleven", "B. Twelve", "C. Thirteen", "D. Ten"], answer: 1 },
-  { id: 142, mapel: "Bahasa Inggris", type: "pg", text: "What time does Sinta wake up?", options: ["A. 5.00", "B. 6.00", "C. 6.30", "D. 5.30"], answer: 3 },
-  { id: 143, mapel: "Bahasa Inggris", type: "pg", text: "How does Sinta go to school?", options: ["A. By bicycle", "B. By bus", "C. On foot", "D. By motorbike"], answer: 0 },
-  { id: 144, mapel: "Bahasa Inggris", type: "pg", text: "What does Sinta do after school?", options: ["A. Plays football", "B. Watches TV", "C. Helps mother & does homework", "D. Visits grandmother"], answer: 2 },
-  { id: 145, mapel: "Bahasa Inggris", type: "pg", text: "The word 'near' in the text has the same meaning as ....", options: ["A. Far", "B. Close", "C. Behind", "D. Under"], answer: 1 },
-  { id: 146, mapel: "Bahasa Inggris", type: "pg", text: "Who do Sinta and her family visit on Sunday?", options: ["A. Her grandmother", "B. Her teacher", "C. Her friend", "D. Her uncle"], answer: 0 },
-  { id: 147, mapel: "Bahasa Inggris", type: "pg", text: "I ___ breakfast every morning.", options: ["A. eats", "B. eating", "C. is eat", "D. eat"], answer: 3 },
-  { id: 148, mapel: "Bahasa Inggris", type: "pg", text: "She ___ to school at 6.30.", options: ["A. go", "B. going", "C. goes", "D. gone"], answer: 2 },
-  { id: 149, mapel: "Bahasa Inggris", type: "pg", text: "My little brother ___ playing football now.", options: ["A. is", "B. are", "C. am", "D. be"], answer: 0 },
-  { id: 150, mapel: "Bahasa Inggris", type: "pg", text: "Where ___ you live?", options: ["A. does", "B. do", "C. is", "D. are"], answer: 1 },
-  { id: 151, mapel: "Bahasa Inggris", type: "pg", text: "The elephant is ___ than the cat.", options: ["A. small", "B. smallest", "C. more big", "D. bigger"], answer: 3 },
-  { id: 152, mapel: "Bahasa Inggris", type: "pg", text: "The bank is ___ the post office and the market.", options: ["A. on", "B. at", "C. between", "D. under"], answer: 2 },
-  { id: 153, mapel: "Bahasa Inggris", type: "pg", text: "A place where we borrow books is a ....", options: ["A. library", "B. canteen", "C. market", "D. hospital"], answer: 0 },
-  { id: 154, mapel: "Bahasa Inggris", type: "pg", text: "What do you say to ask someone's name?", options: ["A. How old are you?", "B. What is your name?", "C. Where do you live?", "D. What time is it?"], answer: 1 },
-  { id: 155, mapel: "Bahasa Inggris", type: "pg", text: "Rina: \"Thank you for helping me.\"\nDani: \"....\"", options: ["A. Good bye", "B. I'm sorry", "C. Nice to meet you", "D. You're welcome"], answer: 3 },
-
-  // Bahasa Inggris Uraian (156-160)
-  { id: 156, mapel: "Bahasa Inggris", type: "essay", text: "Answer based on text Sinta: (a) Where does Sinta live? (b) Who does she live with? (c) What does she do every morning?" },
-  { id: 157, mapel: "Bahasa Inggris", type: "essay", text: "Write four sentences about your daily activities!" },
-  { id: 158, mapel: "Bahasa Inggris", type: "essay", text: "Arrange the words into a good sentence: 'school / goes / to / she / every day'." },
-  { id: 159, mapel: "Bahasa Inggris", type: "essay", text: "Describe your best friend in four sentences (name, age, appearance, hobby)!" },
-  { id: 160, mapel: "Bahasa Inggris", type: "essay", text: "Complete dialogue: Dani: 'Good morning, Rina. How are you?' | Rina: '....' | Dani: 'Where are you going?' | Rina: '....'" }
-];
-
-// Global State
-let selectedKelas = "";
-let currentUser = null;
-let currentQuestionIndex = 0;
-let userAnswers = {};
-
-// Handle Pilih Tombol Kelas
-document.querySelectorAll(".btn-kelas").forEach(btn => {
-  btn.addEventListener("click", function() {
-    document.querySelectorAll(".btn-kelas").forEach(b => b.classList.remove("selected"));
-    this.classList.add("selected");
-    selectedKelas = this.getAttribute("data-kelas");
-  });
-});
-
-// Event Login Form
-document.getElementById("login-form").addEventListener("submit", function(e) {
-  e.preventDefault();
-  const inputNisn = document.getElementById("nisn").value.trim();
-  const loginError = document.getElementById("login-error");
-
-  if (!selectedKelas) {
-    alert("Silakan pilih Kelas (6A / 6B) terlebih dahulu!");
-    return;
-  }
-
-  const student = validStudents.find(s => s.nisn === inputNisn && s.kelas === selectedKelas);
-
-  if (!student) {
-    loginError.style.display = "block";
-    return;
-  }
-
-  loginError.style.display = "none";
-  currentUser = student;
-
-  document.getElementById("conf-nama").innerText = student.nama;
-  document.getElementById("conf-nisn").innerText = student.nisn;
-  document.getElementById("conf-kelas").innerText = student.kelas;
-
-  document.getElementById("login-screen").classList.add("hidden");
-  document.getElementById("confirm-screen").classList.remove("hidden");
-});
-
-document.getElementById("btn-back-login").addEventListener("click", function() {
-  document.getElementById("confirm-screen").classList.add("hidden");
-  document.getElementById("login-screen").classList.remove("hidden");
-});
-
-document.getElementById("btn-start-exam").addEventListener("click", function() {
-  document.getElementById("confirm-screen").classList.add("hidden");
-  document.getElementById("exam-screen").classList.remove("hidden");
-
-  renderNumberGrid();
-  loadQuestion(0);
-});
-
-function renderNumberGrid() {
-  const grid = document.getElementById("number-grid");
-  grid.innerHTML = "";
-
-  allQuestions.forEach((q, idx) => {
-    const btn = document.createElement("button");
-    btn.className = "num-btn";
-    btn.innerText = idx + 1;
-    if (userAnswers[idx] !== undefined && userAnswers[idx] !== "") {
-      btn.classList.add("answered");
-    }
-    if (idx === currentQuestionIndex) {
-      btn.classList.add("active");
-    }
-    btn.onclick = () => loadQuestion(idx);
-    grid.appendChild(btn);
-  });
-}
-
-function loadQuestion(index) {
-  currentQuestionIndex = index;
-  const q = allQuestions[index];
-
-  document.getElementById("soal-number-indicator").innerText = `Soal ${index + 1} dari ${allQuestions.length}`;
-  document.getElementById("soal-type-badge").innerText = `[${q.mapel}] ${q.type === "pg" ? "Pilihan Ganda" : "Uraian"}`;
-  document.getElementById("question-text").innerText = `${index + 1}. ${q.text}`;
-
-  const optionsContainer = document.getElementById("options-container");
-  const essayContainer = document.getElementById("essay-container");
-
-  optionsContainer.innerHTML = "";
-  
-  if (q.type === "pg") {
-    optionsContainer.classList.remove("hidden");
-    essayContainer.classList.add("hidden");
-
-    q.options.forEach((opt, optIdx) => {
-      const item = document.createElement("label");
-      item.className = "option-item";
-      
-      const radio = document.createElement("input");
-      radio.type = "radio";
-      radio.name = "option";
-      radio.value = optIdx;
-      if (userAnswers[index] === optIdx) {
-        radio.checked = true;
-      }
-
-      radio.onchange = () => {
-        userAnswers[index] = optIdx;
-        renderNumberGrid();
-      };
-
-      item.appendChild(radio);
-      item.appendChild(document.createTextNode(opt));
-      optionsContainer.appendChild(item);
-    });
-  } else {
-    optionsContainer.classList.add("hidden");
-    essayContainer.classList.remove("hidden");
-
-    const essayTextarea = document.getElementById("essay-answer");
-    essayTextarea.value = userAnswers[index] || "";
-    essayTextarea.oninput = (e) => {
-      userAnswers[index] = e.target.value;
-      renderNumberGrid();
-    };
-  }
-
-  document.getElementById("btn-prev").disabled = index === 0;
-  document.getElementById("btn-next").disabled = index === allQuestions.length - 1;
-
-  renderNumberGrid();
-}
-
-document.getElementById("btn-prev").onclick = () => {
-  if (currentQuestionIndex > 0) loadQuestion(currentQuestionIndex - 1);
-};
-
-document.getElementById("btn-next").onclick = () => {
-  if (currentQuestionIndex < allQuestions.length - 1) loadQuestion(currentQuestionIndex + 1);
-};
-
-document.getElementById("btn-finish").onclick = () => {
-  if (confirm("Apakah Anda yakin ingin menyelesaikan dan mengirimkan jawaban?")) {
-    finishExam();
-  }
-};
-
-function finishExam() {
-  document.getElementById("exam-screen").classList.add("hidden");
-  document.getElementById("result-screen").classList.remove("hidden");
-
-  let pgScore = 0;
-  let essayTextSummary = "";
-  
-  // Data Hasil Jawaban untuk Grafik Line
-  const pgLabels = [];
-  const pgCorrectData = [];
-  const pgWrongData = [];
-
-  allQuestions.forEach((q, idx) => {
-    if (q.type === "pg") {
-      pgLabels.push(`S${idx + 1}`);
-      const isCorrect = (userAnswers[idx] === q.answer);
-      if (isCorrect) {
-        pgScore += 2; // Maksimal 240 poin PG
-        pgCorrectData.push(1);
-        pgWrongData.push(0);
-      } else {
-        pgCorrectData.push(0);
-        pgWrongData.push(1);
-      }
-    } else {
-      essayTextSummary += `[Soal ${idx + 1} - ${q.mapel}]: ${userAnswers[idx] || "Tidak Diisi"} | `;
-    }
-  });
-
-  document.getElementById("res-nama").innerText = currentUser.nama;
-  document.getElementById("res-nisn").innerText = currentUser.nisn;
-  document.getElementById("res-kelas").innerText = currentUser.kelas;
-  document.getElementById("res-score").innerText = pgScore;
-
-  // Visualisasikan Hasil dengan Grafik Line Smooth (Gelombang)
-  renderResultChart(pgLabels, pgCorrectData, pgWrongData);
-
-  // Kirim data ke Google Sheets
-  const payload = {
-    action: "save",
-    nama: currentUser.nama,
-    nisn: currentUser.nisn,
-    kelas: currentUser.kelas,
-    skorPG: pgScore,
-    jawabanUraian: essayTextSummary
-  };
-
-  fetch(GOOGLE_SCRIPT_URL, {
-    method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  })
-  .then(() => {
-    document.getElementById("res-status").innerText = "Berhasil Terkirim ke Spreadsheet Admin!";
-    document.getElementById("res-status").style.color = "#52c41a";
-  })
-  .catch((err) => {
-    document.getElementById("res-status").innerText = "Gagal Mengirim, Silakan Hubungi Guru.";
-    document.getElementById("res-status").style.color = "#ff4d4f";
-  });
-}
-
-// Rendering Grafik Line Gelombang (Smooth Curved)
-function renderResultChart(labels, correctData, wrongData) {
-  const ctx = document.getElementById('resultChart').getContext('2d');
-  
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: 'Jawaban Benar',
-          data: correctData,
-          borderColor: '#52c41a',
-          backgroundColor: 'rgba(82, 196, 26, 0.15)',
-          tension: 0.4, // Membuat Gelombang Mulus (Smooth Spline)
-          fill: true,
-          pointRadius: 3,
-          pointBackgroundColor: '#52c41a',
-          borderWidth: 2
-        },
-        {
-          label: 'Jawaban Salah / Kosong',
-          data: wrongData,
-          borderColor: '#ff4d4f',
-          backgroundColor: 'rgba(255, 77, 79, 0.15)',
-          tension: 0.4, // Membuat Gelombang Mulus (Smooth Spline)
-          fill: true,
-          pointRadius: 3,
-          pointBackgroundColor: '#ff4d4f',
-          borderWidth: 2
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: 'top',
-          labels: { font: { weight: 'bold' } }
-        },
-        tooltip: {
-          callbacks: {
-            label: function(context) {
-              return context.dataset.label + ': ' + (context.raw === 1 ? 'Ya' : 'Tidak');
-            }
-          }
-        }
-      },
-      scales: {
-        y: {
-          min: -0.1,
-          max: 1.1,
-          ticks: {
-            stepSize: 1,
-            callback: function(value) {
-              if (value === 1) return 'YA';
-              if (value === 0) return 'TIDAK';
-              return '';
-            }
-          }
-        },
-        x: {
-          ticks: {
-            font: { size: 9 },
-            maxRotation: 0
-          }
-        }
-      }
-    }
-  });
-}
+  // Seni Budaya PG (121-135)[cite: 1]
+  { id: 121, mapel: "Seni Budaya", type: "pg", text: "Unsur dasar seni rupa fisik yang terbentuk dari sekumpulan titik yang dihubungkan adalah ....", options: ["A. Bidang", "B. Garis", "C. Warna", "D. Tekstur"], answer: 1 },
+  { id: 122, mapel: "Seni Budaya", type: "pg", text: "Kelompok warna primer (warna pokok dasar) dalam seni rupa adalah ....", options: ["A. Hijau, jingga, ungu", "B. Hitam, putih, abu-abu", "C. Merah, hijau, biru muda", "D. Merah, kuning, biru"], answer: 3 },
+  { id: 123, mapel: "Seni Budaya", type: "pg", text: "Hasil pencampuran dua warna primer yaitu merah dan kuning akan menghasilkan warna sekunder berupa ....", options: ["A. Jingga (oranye)", "B. Hijau", "C. Ungu", "D. Cokelat"], answer: 0 },
+  { id: 124, mapel: "Seni Budaya", type: "pg", text: "Kelompok warna yang memberikan kesan hangat (warm colors) pada karya seni adalah ....", options: ["A. Biru, hijau, ungu", "B. Biru, putih, hitam", "C. Merah, jingga, kuning", "D. Ungu, biru, hijau"], answer: 2 },
+  { id: 125, mapel: "Seni Budaya", type: "pg", text: "Contoh karya seni rupa yang hanya memiliki dua ukuran (panjang dan lebar) atau karya dua dimensi adalah ....", options: ["A. Patung pahat", "B. Lukisan di kanvas", "C. Keramik gerabah", "D. Ukiran kayu tiga dimensi"], answer: 1 },
+  { id: 126, mapel: "Seni Budaya", type: "pg", text: "Fungsi utama dari pembuatan sebuah poster niaga atau layanan masyarakat adalah ....", options: ["A. Menghias dinding ruangan", "B. Menyimpan barang", "C. Sebagai alat tulis", "D. Menyampaikan pesan, informasi, atau ajakan secara visual"], answer: 3 },
+  { id: 127, mapel: "Seni Budaya", type: "pg", text: "Teknik menggambar atau melukis dengan cara membuat garis-garis sejajar atau menyilang yang rapat untuk menentukan gelap terang disebut teknik ....", options: ["A. Arsir (hatching)", "B. Menempel kertas", "C. Menekan lilin", "D. Memahat batu"], answer: 0 },
+  { id: 128, mapel: "Seni Budaya", type: "pg", text: "Karya seni rupa yang memiliki dimensi panjang, lebar, serta tinggi dan dapat dilihat dari segala arah disebut seni rupa ....", options: ["A. Kolase", "B. Batik tulis", "C. Patung / 3 dimensi", "D. Lukisan dinding"], answer: 2 },
+  { id: 129, mapel: "Seni Budaya", type: "pg", text: "Membuat kerajinan pot tanaman hias menggunakan botol plastik bekas air mineral termasuk dalam teknik ....", options: ["A. Lukis kanvas", "B. Daur ulang (recycle)", "C. Cetak tinggi", "D. Anyaman bambu"], answer: 1 },
+  { id: 130, mapel: "Seni Budaya", type: "pg", text: "Kolase adalah jenis karya seni rupa yang dibuat menggunakan metode ....", options: ["A. Menempelkan berbagai macam paduan bahan pada bidang datar", "B. Memahat balok kayu", "C. Mencetak adonan semen", "D. Menggunakan cat air"], answer: 0 },
+  { id: 131, mapel: "Seni Budaya", type: "pg", text: "Prinsip dasar dalam proses pembuatan kain batik tradisional adalah ....", options: ["A. Memahat permukaan kain", "B. Menjahit benang wol", "C. Menganyam lembaran kain", "D. Menutup bagian kain dengan malam (lilin) lalu dicelup warna"], answer: 3 },
+  { id: 132, mapel: "Seni Budaya", type: "pg", text: "Kain tenun tradisional khas yang menjadi kebanggaan masyarakat Provinsi Sulawesi Barat adalah ....", options: ["A. Kain Ulos", "B. Songket Palembang", "C. Sutra Mandar", "D. Tenun Ikat Sumba"], answer: 2 },
+  { id: 133, mapel: "Seni Budaya", type: "pg", text: "Prinsip penataan unsur-unsur seni rupa agar tercipta kesan serasi, teratur, dan seimbang disebut prinsip ....", options: ["A. Keseimbangan (balance)", "B. Monoton", "C. Objek raksasa", "D. Pengosongan bidang"], answer:
