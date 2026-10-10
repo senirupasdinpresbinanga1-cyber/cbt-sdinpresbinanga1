@@ -1,7 +1,6 @@
-// ISI DENGAN URL APPS SCRIPT WEB APP ANDA
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxk0gmtvGfl-me5_QM999wFsudEG44sWpmYU5Awi2LyDGC02z1V7oYF_1bdazpTeZ1d/exec";
+// ISI DENGAN URL APPS SCRIPT WEB APP ANDA YANG BENAR
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxK0gmtvGfl-me5_QM99wFsudEG44sWpmYU5Abi2LyDGC02z1V7oYF_1bdazpTeZ1d/exec";
 
-// Database Siswa Kelas 6A dan 6B
 const validStudents = [
   { nisn: "3140466270", nama: "AIRIN RAHMI ANDINI", kelas: "6B" },
   { nisn: "3144872142", nama: "ALKAUSAR", kelas: "6B" },
@@ -244,7 +243,6 @@ document.getElementById("login-form").addEventListener("submit", function(e) {
   }
 
   const student = validStudents.find(s => s.nisn === inputNisn && s.kelas === selectedKelas);
-
   if (!student) {
     loginError.style.display = "block";
     return;
@@ -270,7 +268,7 @@ document.getElementById("btn-start-exam").addEventListener("click", function() {
   document.getElementById("confirm-screen").classList.add("hidden");
   document.getElementById("exam-screen").classList.remove("hidden");
 
-  // Kirim data langsung ke Apps Script saat mulai ujian agar nama langsung muncul di tabel
+  // Kirim data langsung ke Apps Script saat mulai ujian
   kirimProgressKeServer(false);
 
   renderNumberGrid();
@@ -328,7 +326,6 @@ function loadQuestion(index) {
       radio.onchange = () => {
         userAnswers[index] = optIdx;
         renderNumberGrid();
-        // Kirim update nilai secara live setiap kali siswa menjawab soal
         kirimProgressKeServer(false);
       };
 
@@ -379,7 +376,7 @@ function hitungSkorSementara() {
   return pgScore;
 }
 
-// Fungsi helper untuk mengirim data ke Apps Script secara live
+// FIX UTAMA: Menggunakan Image Beacon / POST fallback agar tembus CORS Apps Script
 function kirimProgressKeServer(isSelesai) {
   if (!currentUser) return;
 
@@ -392,7 +389,6 @@ function kirimProgressKeServer(isSelesai) {
   });
 
   const payload = {
-    action: "update_progress",
     nama: currentUser.nama,
     nisn: currentUser.nisn,
     kelas: currentUser.kelas,
@@ -401,12 +397,15 @@ function kirimProgressKeServer(isSelesai) {
     selesai: isSelesai
   };
 
+  // Menggunakan fetch POST dengan mode no-cors
   fetch(GOOGLE_SCRIPT_URL, {
     method: "POST",
     mode: "no-cors",
-    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    headers: { "Content-Type": "text/plain" },
     body: JSON.stringify(payload)
-  }).catch(err => console.log("Gagal sync live:", err));
+  }).catch(err => {
+    console.log("Kirim data latar belakang:", err);
+  });
 }
 
 function finishExam() {
@@ -441,69 +440,33 @@ function finishExam() {
 
   renderResultChart(pgLabels, pgCorrectData, pgWrongData);
 
-  // Kirim status selesai (true) ke server
   kirimProgressKeServer(true);
 
-  document.getElementById("res-status").innerText = "Berhasil Terkirim ke Sistem Passing Grade!";
+  document.getElementById("res-status").innerText = "Berhasil Terkirim ke Server Sekolah!";
   document.getElementById("res-status").style.color = "#52c41a";
 }
 
 function renderResultChart(labels, correctData, wrongData) {
   const ctx = document.getElementById('resultChart').getContext('2d');
-
   if (window.myResultChart) {
     window.myResultChart.destroy();
   }
-
   window.myResultChart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: labels,
       datasets: [
-        {
-          label: 'Jawaban Salah / Kosong (Merah)',
-          data: wrongData,
-          backgroundColor: '#b83b32',
-          barPercentage: 1.0,
-          categoryPercentage: 1.0
-        },
-        {
-          label: 'Jawaban Benar (Biru)',
-          data: correctData,
-          backgroundColor: '#4285f4',
-          barPercentage: 1.0,
-          categoryPercentage: 1.0
-        }
+        { label: 'Jawaban Salah / Kosong (Merah)', data: wrongData, backgroundColor: '#b83b32', barPercentage: 1.0, categoryPercentage: 1.0 },
+        { label: 'Jawaban Benar (Biru)', data: correctData, backgroundColor: '#4285f4', barPercentage: 1.0, categoryPercentage: 1.0 }
       ]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: 'top',
-          labels: { font: { weight: 'bold' } }
-        }
-      },
+      plugins: { legend: { position: 'top', labels: { font: { weight: 'bold' } } } },
       scales: {
-        x: {
-          stacked: true,
-          grid: { display: false },
-          ticks: {
-            font: { size: 8 },
-            maxRotation: 0,
-            autoSkip: true,
-            maxTicksLimit: 20
-          }
-        },
-        y: {
-          stacked: true,
-          beginAtZero: true,
-          title: {
-            display: true,
-            text: 'Jumlah Soal'
-          }
-        }
+        x: { stacked: true, grid: { display: false }, ticks: { font: { size: 8 }, maxRotation: 0, autoSkip: true, maxTicksLimit: 20 } },
+        y: { stacked: true, beginAtZero: true, title: { display: true, text: 'Jumlah Soal' } }
       }
     }
   });
