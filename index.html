@@ -51,6 +51,12 @@
     .chart-container { position: relative; height: 320px; width: 100%; margin-top: 15px; }
     footer { text-align: center; padding: 20px; font-size: 12px; color: #888; }
     .hidden { display: none !important; }
+    
+    @media print {
+      body { background: white; }
+      .header-bg, .chart-box, button, footer { display: none !important; }
+      #result-screen { box-shadow: none; border: none; margin: 0; padding: 0; width: 100%; display: block !important; }
+    }
   </style>
 </head>
 <body>
@@ -127,20 +133,24 @@
     </div>
     <div id="result-screen" class="card hidden">
       <h3 style="color: #52c41a;">Ujian Selesai!</h3>
-      <p style="margin-top: 8px; font-size: 14px; color: #666;">Nilai dan jawaban Anda telah dikirimkan ke server sekolah.</p>
+      <p style="margin-top: 8px; font-size: 14px; color: #666;">Nilai dan status kelulusan Anda telah diperbarui ke server sekolah.</p>
       <div style="margin: 20px 0; padding: 15px; background: #f6ffed; border: 1px solid #b7eb8f; border-radius: 8px; line-height: 1.8; font-size: 14px;">
         <p><strong>Nama:</strong> <span id="res-nama"></span></p>
         <p><strong>NISN:</strong> <span id="res-nisn"></span></p>
         <p><strong>Kelas:</strong> <span id="res-kelas"></span></p>
         <p><strong>Skor Pilihan Ganda:</strong> <span id="res-score" style="font-weight:bold; font-size:18px; color:#389e0d;"></span> / 240</p>
-        <p><strong>Status Pengiriman:</strong> <span id="res-status" style="color:#1677ff; font-weight:bold;">Mengirim data ke Server...</span></p>
+        <p><strong>Passing Grade (160):</strong> <span id="res-passing-status" style="font-weight:bold; padding: 3px 8px; border-radius: 4px;"></span></p>
+        <p><strong>Status Pengiriman:</strong> <span id="res-status" style="color:#1677ff; font-weight:bold;">Terkirim</span></p>
       </div>
       <div class="chart-box">
         <h4 style="text-align: center; color: #333;">Grafik Analisis Jawaban Pilihan Ganda</h4>
-        <p style="text-align: center; font-size: 12px; color: #777;">Grafik akumulasi bertumpuk: Merah (Salah/Kosong) & Biru (Benar).</p>
         <div class="chart-container"><canvas id="resultChart"></canvas></div>
       </div>
-      <button onclick="location.reload()" class="btn-login" style="margin-top: 25px; width: auto; padding: 10px 25px;">Selesai</button>
+      <div style="display: flex; gap: 10px; margin-top: 25px;">
+        <button onclick="resetUjianData()" class="btn-action btn-secondary" style="flex: 1;"><i class="fa-solid fa-rotate-right"></i> Reset Data</button>
+        <button onclick="cetakPDFHasil()" class="btn-action" style="flex: 1; background: #faad14; color: white;"><i class="fa-solid fa-file-pdf"></i> Cetak PDF</button>
+        <button onclick="location.reload()" class="btn-login" style="flex: 1; margin:0;">Selesai</button>
+      </div>
     </div>
   </div>
   <footer>
