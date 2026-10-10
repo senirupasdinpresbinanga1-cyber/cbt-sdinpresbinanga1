@@ -1,5 +1,4 @@
-// ISI DENGAN URL APPS SCRIPT WEB APP ANDA YANG BENAR
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyreCihaaImDXUSIc2axAfu1x_NP-U225QFM7GgnGyby9BJWOzl5q1d3ycs1MQWR3Zp/exec";
+const GOOGLE_SCRIPT_URL = "URL_APPS_SCRIPT_ANDA_DISINI";
 
 const validStudents = [
   { nisn: "3140466270", nama: "AIRIN RAHMI ANDINI", kelas: "6B" },
@@ -223,6 +222,7 @@ let selectedKelas = "";
 let currentUser = null;
 let currentQuestionIndex = 0;
 let userAnswers = {};
+let autoUpdateInterval = null;
 
 document.querySelectorAll(".btn-kelas").forEach(btn => {
   btn.addEventListener("click", function() {
@@ -268,8 +268,14 @@ document.getElementById("btn-start-exam").addEventListener("click", function() {
   document.getElementById("confirm-screen").classList.add("hidden");
   document.getElementById("exam-screen").classList.remove("hidden");
 
-  // Kirim data langsung ke Apps Script saat mulai ujian
   kirimProgressKeServer(false);
+  
+  if (autoUpdateInterval) clearInterval(autoUpdateInterval);
+  autoUpdateInterval = setInterval(() => {
+    if (currentUser) {
+      kirimProgressKeServer(false);
+    }
+  }, 1000);
 
   renderNumberGrid();
   loadQuestion(0);
@@ -376,7 +382,6 @@ function hitungSkorSementara() {
   return pgScore;
 }
 
-// FIX UTAMA: Menggunakan Image Beacon / POST fallback agar tembus CORS Apps Script
 function kirimProgressKeServer(isSelesai) {
   if (!currentUser) return;
 
@@ -397,7 +402,6 @@ function kirimProgressKeServer(isSelesai) {
     selesai: isSelesai
   };
 
-  // Menggunakan fetch POST dengan mode no-cors
   fetch(GOOGLE_SCRIPT_URL, {
     method: "POST",
     mode: "no-cors",
@@ -409,10 +413,25 @@ function kirimProgressKeServer(isSelesai) {
 }
 
 function finishExam() {
+  if (autoUpdateInterval) clearInterval(autoUpdateInterval);
+  
   document.getElementById("exam-screen").classList.add("hidden");
   document.getElementById("result-screen").classList.remove("hidden");
 
   let pgScore = hitungSkorSementara();
+  const passingLimit = 160;
+  const passingEl = document.getElementById("res-passing-status");
+  
+  if (pgScore >= passingLimit) {
+    passingEl.innerText = "Sangat Baik (Lulus Passing Grade)";
+    passingEl.style.backgroundColor = "#52c41a";
+    passingEl.style.color = "white";
+  } else {
+    passingEl.innerText = "Perlu Perbaikan (Belum Mencapai Passing Grade)";
+    passingEl.style.backgroundColor = "#ff4d4f";
+    passingEl.style.color = "white";
+  }
+
   const pgLabels = [];
   const pgCorrectData = [];
   const pgWrongData = [];
@@ -444,6 +463,27 @@ function finishExam() {
 
   document.getElementById("res-status").innerText = "Berhasil Terkirim ke Server Sekolah!";
   document.getElementById("res-status").style.color = "#52c41a";
+}
+
+function resetUjianData() {
+  if (confirm("Apakah Anda ingin mereset seluruh data sesi ujian ini?")) {
+    if (autoUpdateInterval) clearInterval(autoUpdateInterval);
+    currentUser = null;
+    userAnswers = {};
+    currentQuestionIndex = 0;
+    selectedKelas = "";
+    
+    document.querySelectorAll(".btn-kelas").forEach(b => b.classList.remove("selected"));
+    document.getElementById("nisn").value = "";
+    
+    document.getElementById("exam-screen").classList.add("hidden");
+    document.getElementById("result-screen").classList.add("hidden");
+    document.getElementById("login-screen").classList.remove("hidden");
+  }
+}
+
+function cetakPDFHasil() {
+  window.print();
 }
 
 function renderResultChart(labels, correctData, wrongData) {
